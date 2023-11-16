@@ -1,0 +1,32 @@
+<!-- res/menu/menu_main.xml -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/iconHome"
+        android:icon="@drawable/baseline_home_24"
+        android:title="@string/host_iconHome"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/itemAccount"
+        android:icon="@drawable/baseline_account_circle_24"
+        android:title="@string/host_itemAccount"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/itemReservationView"
+        android:title="@string/host_itemReservationView"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/itemAccomodationView"
+        android:title="@string/host_itemAccomodationView"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/itemNotificationsView"
+        android:title="@string/host_itemNotificationsView"
+        app:showAsAction="never" />
+
+</menu>
