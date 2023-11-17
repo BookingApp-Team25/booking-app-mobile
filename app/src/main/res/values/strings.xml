@@ -41,6 +41,7 @@
     <string name="guest_iconHome">home</string>
     <string name="guest_itemAccount">account</string>
     <string name="guest_itemReservationView">View reservations</string>
+    <string name="guest_itemAccomodationView">View all accommodations</string>
     <string name="guest_itemNotificationsView">View notifications</string>
 
 </resources>
