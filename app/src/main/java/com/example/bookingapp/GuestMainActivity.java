@@ -73,11 +73,6 @@ public class GuestMainActivity extends AppCompatActivity {
             startActivity(intent);
             return true;
         }
-        else if(itemId == R.id.itemAccomodationView){
-            Intent intent = new Intent(this,  AccommodationsActivity.class);
-            startActivity(intent);
-            return true;
-        }
         else if(itemId == R.id.itemReservationView){
             Intent intent = new Intent(this,  GuestReservationsActivity.class);
             startActivity(intent);

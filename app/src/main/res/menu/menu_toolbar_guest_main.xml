@@ -20,11 +20,6 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/itemAccomodationView"
-        android:title="@string/guest_itemAccomodationView"
-        app:showAsAction="never" />
-
-    <item
         android:id="@+id/itemNotificationsView"
         android:title="@string/guest_itemNotificationsView"
         app:showAsAction="never" />
