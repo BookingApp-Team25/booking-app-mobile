@@ -25,7 +25,7 @@
                             android:layout_marginEnd="262dp"
                             android:layout_marginBottom="7dp"
                             android:text="Repeat password"
-                            app:layout_constraintBottom_toTopOf="@+id/editTextTextPassword7"
+                            app:layout_constraintBottom_toTopOf="@+id/rpasswordTxt"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent" />
 
@@ -33,11 +33,11 @@
                             android:id="@+id/textView24"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="40dp"
+                            android:layout_marginStart="44dp"
                             android:layout_marginEnd="309dp"
                             android:layout_marginBottom="3dp"
                             android:text="Password"
-                            app:layout_constraintBottom_toTopOf="@+id/editTextTextPassword4"
+                            app:layout_constraintBottom_toTopOf="@+id/passwordTxt"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent" />
 
@@ -54,7 +54,7 @@
                             app:srcCompat="@drawable/applogo" />
 
                         <EditText
-                            android:id="@+id/editTextTextEmailAddress2"
+                            android:id="@+id/emailTxt"
                             android:layout_width="324dp"
                             android:layout_height="51dp"
                             android:layout_marginTop="236dp"
@@ -65,30 +65,31 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/textView25"
+                            android:id="@+id/textView23"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="40dp"
+                            android:layout_marginStart="44dp"
                             android:layout_marginEnd="336dp"
                             android:layout_marginBottom="4dp"
                             android:text="Email"
-                            app:layout_constraintBottom_toTopOf="@+id/editTextTextEmailAddress2"
+                            app:layout_constraintBottom_toTopOf="@+id/emailTxt"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent" />
 
                         <EditText
-                            android:id="@+id/editTextTextPassword4"
+                            android:id="@+id/passwordTxt"
                             android:layout_width="322dp"
                             android:layout_height="47dp"
-                            android:layout_marginStart="40dp"
                             android:layout_marginTop="324dp"
                             android:ems="10"
                             android:inputType="textPassword"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <EditText
-                            android:id="@+id/editTextText"
+                            android:id="@+id/firstnameTxt"
                             android:layout_width="322dp"
                             android:layout_height="43dp"
                             android:layout_marginTop="39dp"
@@ -96,22 +97,22 @@
                             android:inputType="text"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword7" />
+                            app:layout_constraintTop_toBottomOf="@+id/rpasswordTxt" />
 
                         <TextView
                             android:id="@+id/textView27"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="40dp"
+                            android:layout_marginStart="44dp"
                             android:layout_marginEnd="305dp"
                             android:layout_marginBottom="4dp"
                             android:text="First name"
-                            app:layout_constraintBottom_toTopOf="@+id/editTextText"
+                            app:layout_constraintBottom_toTopOf="@+id/firstnameTxt"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent" />
 
                         <EditText
-                            android:id="@+id/editTextText2"
+                            android:id="@+id/lastnameTxt"
                             android:layout_width="325dp"
                             android:layout_height="49dp"
                             android:layout_marginTop="39dp"
@@ -119,17 +120,17 @@
                             android:inputType="text"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/editTextText" />
+                            app:layout_constraintTop_toBottomOf="@+id/firstnameTxt" />
 
                         <TextView
                             android:id="@+id/textView28"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="40dp"
+                            android:layout_marginStart="44dp"
                             android:layout_marginEnd="305dp"
                             android:layout_marginBottom="4dp"
                             android:text="Last name"
-                            app:layout_constraintBottom_toTopOf="@+id/editTextText2"
+                            app:layout_constraintBottom_toTopOf="@+id/lastnameTxt"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent" />
 
@@ -137,23 +138,23 @@
                             android:id="@+id/textView29"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="40dp"
+                            android:layout_marginStart="44dp"
                             android:layout_marginTop="21dp"
                             android:layout_marginEnd="319dp"
                             android:text="Address"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/editTextText2" />
+                            app:layout_constraintTop_toBottomOf="@+id/lastnameTxt" />
 
                         <TextView
                             android:id="@+id/textView30"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="40dp"
+                            android:layout_marginStart="44dp"
                             android:layout_marginEnd="280dp"
                             android:layout_marginBottom="2dp"
                             android:text="Phone number"
-                            app:layout_constraintBottom_toTopOf="@+id/editTextPhone2"
+                            app:layout_constraintBottom_toTopOf="@+id/phonenumberTxt"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent" />
 
@@ -173,7 +174,7 @@
                             app:layout_constraintVertical_bias="0.0" />
 
                         <EditText
-                            android:id="@+id/editTextTextPostalAddress2"
+                            android:id="@+id/addressTxt"
                             android:layout_width="326dp"
                             android:layout_height="48dp"
                             android:layout_marginTop="40dp"
@@ -181,10 +182,10 @@
                             android:inputType="textPostalAddress"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/editTextText2" />
+                            app:layout_constraintTop_toBottomOf="@+id/lastnameTxt" />
 
                         <EditText
-                            android:id="@+id/editTextTextPassword7"
+                            android:id="@+id/rpasswordTxt"
                             android:layout_width="329dp"
                             android:layout_height="42dp"
                             android:layout_marginTop="44dp"
@@ -192,10 +193,10 @@
                             android:inputType="textPassword"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword4" />
+                            app:layout_constraintTop_toBottomOf="@+id/passwordTxt" />
 
                         <EditText
-                            android:id="@+id/editTextPhone2"
+                            android:id="@+id/phonenumberTxt"
                             android:layout_width="326dp"
                             android:layout_height="47dp"
                             android:layout_marginTop="38dp"
@@ -203,7 +204,7 @@
                             android:inputType="phone"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/editTextTextPostalAddress2" />
+                            app:layout_constraintTop_toBottomOf="@+id/addressTxt" />
 
                         <TextView
                             android:id="@+id/textView31"
