@@ -6,4 +6,13 @@
     </style>
 
     <style name="Theme.BookingApp" parent="Base.Theme.BookingApp" />
+
+    <style name="Theme.BookingApp.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.BookingApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.BookingApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
