@@ -3,6 +3,7 @@ package com.example.bookingapp;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -97,8 +98,18 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
                 // Handle click on the item at 'position'
                 Log.i("ShopApp", "Clicked: " + product.getTitle() + ", id: " +
                         product.getId().toString());
-                Toast.makeText(getContext(), "Clicked: " + product.getTitle()  +
-                        ", id: " + product.getId().toString(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "Clicked: " + product.getTitle()  +
+//                        ", id: " + product.getId().toString(), Toast.LENGTH_SHORT).show();
+
+                // Uncomment the next line to start a new activity
+                Intent intent = new Intent(getContext(), AccommodationsActivity.class);
+
+                // If you want to pass data to the new activity, you can use intent.putExtra
+                // For example, passing the product ID:
+                // intent.putExtra("product_id", product.getId());
+
+                // Uncomment the next line to start the new activity
+                getContext().startActivity(intent);
             });
         }
 
