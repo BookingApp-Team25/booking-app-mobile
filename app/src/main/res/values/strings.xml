@@ -45,14 +45,10 @@
 
     <string name="filters">Filters</string>
     <string name="category">Category</string>
-    <string name="smartphone">Smartphone</string>
-    <string name="tablet">Tablet</string>
-    <string name="manufacturer">Manufacturer</string>
-    <string name="samsung">Samsung</string>
-    <string name="xiaomi">Xiaomi</string>
-    <string name="huawei">Huawei</string>
-    <string name="nokia">Nokia</string>
+    <string name="apartment">Apartment</string>
+    <string name="room">Room</string>
+    <string name="price">Price</string>
     <string name="sort">Sort</string>
-    <string name="samsung_galaxy_s23_ultra_gray">Samsung Galaxy S23 Ultra Gray</string>
+    <string name="accommodation1">accommodation 1</string>
     <string name="cart">Cart</string>
 </resources>

@@ -109,9 +109,9 @@ public class ProductsPageFragment extends Fragment {
     }
 
     private void prepareProductList(ArrayList<Product> products){
-        products.add(new Product(1L, "Samsung S23 Ultra White", "Description 1", R.drawable.samsung_galaxy_s23_ultra));
-        products.add(new Product(2L, "Samsung S23 Ultra Gray", "Description 2", R.drawable.samsung_galaxy_s23_ultra_green));
-        products.add(new Product(3L, "Samsung S23 Ultra White", "Description 1", R.drawable.samsung_galaxy_s23_ultra));
-        products.add(new Product(4L, "Samsung S23 Ultra Gray", "Description 2", R.drawable.samsung_galaxy_s23_ultra_green));
+        products.add(new Product(1L, "Accommodation 1", "Description 1", R.drawable.accommodation1));
+        products.add(new Product(2L, "Accommodation 2", "Description 2", R.drawable.accommodation2));
+        products.add(new Product(3L, "Accommodation 3", "Description 3", R.drawable.accommodation1));
+        products.add(new Product(4L, "Accommodation 4", "Description 4", R.drawable.accommodation2));
     }
 }
