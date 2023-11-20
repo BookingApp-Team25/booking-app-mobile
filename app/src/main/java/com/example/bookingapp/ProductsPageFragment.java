@@ -97,7 +97,7 @@ public class ProductsPageFragment extends Fragment {
 //        });
 
 
-        //FragmentTransition.to(ProductsListFragment.newInstance(products), getActivity(), false, R.id.scroll_products_list);
+        FragmentTransition.to(ProductsListFragment.newInstance(products), getActivity(), false, R.id.scroll_products_list);
 
         return root;
     }
