@@ -1,5 +1,6 @@
 package com.example.bookingapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -58,6 +59,8 @@ public class ProductsListFragment extends ListFragment {
     public void onListItemClick(@NonNull ListView l, @NonNull View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         // Handle the click on item at 'position'
+//        Intent intent = new Intent(getActivity(), HostMainActivity.class);
+//        Log.i("ShopApp", "Item clicked at position: " + position);
     }
 
 }
