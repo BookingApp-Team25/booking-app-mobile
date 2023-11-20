@@ -43,4 +43,12 @@
     <string name="guest_itemReservationView">View reservations</string>
     <string name="guest_itemNotificationsView">View notifications</string>
 
+    <string name="filters">Filters</string>
+    <string name="category">Category</string>
+    <string name="apartment">Apartment</string>
+    <string name="room">Room</string>
+    <string name="price">Price</string>
+    <string name="sort">Sort</string>
+    <string name="accommodation1">accommodation 1</string>
+    <string name="cart">Cart</string>
 </resources>

@@ -23,10 +23,5 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include
-        layout="@layout/activity_guest_main_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
