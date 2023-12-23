@@ -8,15 +8,15 @@
     >
     <fragment
         android:id="@+id/nav_products"
-        android:name="com.example.bookingapp.ProductsPageFragment"
+        android:name="com.example.bookingapp.AccommodationsPageFragment"
         android:label="Products"
-        tools:layout="@layout/fragment_products_page"
+        tools:layout="@layout/fragment_accommodations_page"
         />
 
 <!--    <fragment-->
 <!--        android:id="@+id/nav_new"-->
 <!--        android:name="com.example.shopapp.fragments.new_product.NewProductFragment"-->
-<!--        android:label="New product"-->
+<!--        android:label="New accommodation"-->
 <!--        tools:layout="@layout/fragment_new_product"-->
 <!--        app:popUpTo="@+id/nav_products"-->
 <!--        app:popUpToInclusive="true"-->

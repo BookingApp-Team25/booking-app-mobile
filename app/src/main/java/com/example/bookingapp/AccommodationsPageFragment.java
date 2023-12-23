@@ -1,11 +1,8 @@
 package com.example.bookingapp;
 
-import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -14,37 +11,32 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.TextView;
 
-import com.example.bookingapp.R;
-import com.example.bookingapp.databinding.FragmentProductsPageBinding;
-import com.example.bookingapp.FragmentTransition;
-import com.example.bookingapp.Product;
+import com.example.bookingapp.databinding.FragmentAccommodationsPageBinding;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 
-public class ProductsPageFragment extends Fragment {
+public class AccommodationsPageFragment extends Fragment {
 
-    public static ArrayList<Product> products = new ArrayList<Product>();
-    private ProductsPageViewModel productsViewModel;
-    private FragmentProductsPageBinding binding;
+    public static ArrayList<Accommodation> accommodations = new ArrayList<Accommodation>();
+    private AccommodationsPageViewModel productsViewModel;
+    private FragmentAccommodationsPageBinding binding;
 
-    public static ProductsPageFragment newInstance() {
-        return new ProductsPageFragment();
+    public static AccommodationsPageFragment newInstance() {
+        return new AccommodationsPageFragment();
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        productsViewModel = new ViewModelProvider(this).get(ProductsPageViewModel.class);
+        productsViewModel = new ViewModelProvider(this).get(AccommodationsPageViewModel.class);
 
-        binding = FragmentProductsPageBinding.inflate(inflater, container, false);
+        binding = FragmentAccommodationsPageBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        prepareProductList(products);
+        prepareProductList(accommodations);
 
         SearchView searchView = binding.searchText;
         productsViewModel.getText().observe(getViewLifecycleOwner(), searchView::setQueryHint);
@@ -97,7 +89,7 @@ public class ProductsPageFragment extends Fragment {
 //        });
 
 
-        FragmentTransition.to(ProductsListFragment.newInstance(products), getActivity(), false, R.id.scroll_products_list);
+        FragmentTransition.to(AccommodationsListFragment.newInstance(accommodations), getActivity(), false, R.id.scroll_products_list);
 
         return root;
     }
@@ -108,10 +100,10 @@ public class ProductsPageFragment extends Fragment {
         binding = null;
     }
 
-    private void prepareProductList(ArrayList<Product> products){
-        products.add(new Product(1L, "Accommodation 1", "Description 1", R.drawable.accommodation1));
-        products.add(new Product(2L, "Accommodation 2", "Description 2", R.drawable.accommodation2));
-        products.add(new Product(3L, "Accommodation 3", "Description 3", R.drawable.accommodation1));
-        products.add(new Product(4L, "Accommodation 4", "Description 4", R.drawable.accommodation2));
+    private void prepareProductList(ArrayList<Accommodation> accommodations){
+        accommodations.add(new Accommodation(1L, "Accommodation 1", "Description 1", R.drawable.accommodation1));
+        accommodations.add(new Accommodation(2L, "Accommodation 2", "Description 2", R.drawable.accommodation2));
+        accommodations.add(new Accommodation(3L, "Accommodation 3", "Description 3", R.drawable.accommodation1));
+        accommodations.add(new Accommodation(4L, "Accommodation 4", "Description 4", R.drawable.accommodation2));
     }
 }

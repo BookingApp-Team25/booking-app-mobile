@@ -1,6 +1,5 @@
 package com.example.bookingapp;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,21 +9,21 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.ListFragment;
-import com.example.bookingapp.ProductListAdapter;
-import com.example.bookingapp.databinding.FragmentProductsListBinding;
-import com.example.bookingapp.Product;
+
+import com.example.bookingapp.databinding.FragmentAccommodationsListBinding;
+
 import java.util.ArrayList;
 
-public class ProductsListFragment extends ListFragment {
-    private ProductListAdapter adapter;
+public class AccommodationsListFragment extends ListFragment {
+    private AccommodationListAdapter adapter;
     private static final String ARG_PARAM = "param";
-    private ArrayList<Product> mProducts;
-    private FragmentProductsListBinding binding;
+    private ArrayList<Accommodation> mAccommodations;
+    private FragmentAccommodationsListBinding binding;
 
-    public static ProductsListFragment newInstance(ArrayList<Product> products){
-        ProductsListFragment fragment = new ProductsListFragment();
+    public static AccommodationsListFragment newInstance(ArrayList<Accommodation> accommodations){
+        AccommodationsListFragment fragment = new AccommodationsListFragment();
         Bundle args = new Bundle();
-        args.putParcelableArrayList(ARG_PARAM, products);
+        args.putParcelableArrayList(ARG_PARAM, accommodations);
         fragment.setArguments(args);
         return fragment;
     }
@@ -33,7 +32,7 @@ public class ProductsListFragment extends ListFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.i("ShopApp", "onCreateView Products List Fragment");
-        binding = FragmentProductsListBinding.inflate(inflater, container, false);
+        binding = FragmentAccommodationsListBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         return root;
     }
@@ -43,8 +42,8 @@ public class ProductsListFragment extends ListFragment {
         super.onCreate(savedInstanceState);
         Log.i("ShopApp", "onCreate Products List Fragment");
         if (getArguments() != null) {
-            mProducts = getArguments().getParcelableArrayList(ARG_PARAM);
-            adapter = new ProductListAdapter(getActivity(), mProducts);
+            mAccommodations = getArguments().getParcelableArrayList(ARG_PARAM);
+            adapter = new AccommodationListAdapter(getActivity(), mAccommodations);
             setListAdapter(adapter);
         }
     }
