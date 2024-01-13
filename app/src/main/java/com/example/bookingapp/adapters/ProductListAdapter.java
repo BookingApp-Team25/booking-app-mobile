@@ -1,4 +1,4 @@
-package com.example.bookingapp;
+package com.example.bookingapp.adapters;
 
 
 
@@ -12,15 +12,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.bookingapp.ProductsPageFragment;
 import com.example.bookingapp.Product;
-
 import com.example.bookingapp.R;
+import com.example.bookingapp.activities.AccommodationsActivity;
 
 import java.util.ArrayList;
 

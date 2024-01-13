@@ -1,31 +1,39 @@
-package com.example.bookingapp;
+package com.example.bookingapp.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
-import com.example.bookingapp.databinding.ActivityGuestMainContentBinding;
+import com.example.bookingapp.R;
+import com.example.bookingapp.activities.AccountActivity;
+import com.example.bookingapp.activities.GuestReservationsActivity;
+import com.example.bookingapp.activities.NotificationsActivity;
+import com.example.bookingapp.clients.ClientUtils;
 import com.example.bookingapp.databinding.ActivityGuestMainNavBarBinding;
+import com.example.bookingapp.dto.MessageResponse;
+import com.example.bookingapp.security.UserInfo;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.Toast;
 
-import androidx.core.view.WindowCompat;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
-import com.example.bookingapp.databinding.ActivityGuestMainBinding;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class GuestMainActivity extends AppCompatActivity {
+public class GuestMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private ActivityGuestMainNavBarBinding binding;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -46,12 +54,11 @@ public class GuestMainActivity extends AppCompatActivity {
         }
         drawer = binding.drawerLayout;
         navigationView = binding.navView;
+        navigationView.setNavigationItemSelectedListener(this);
         toolbar = binding.activityGuestMain.toolbar;
-
         actionBarDrawerToggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(actionBarDrawerToggle);
-
         actionBarDrawerToggle.syncState();
 
     }
@@ -81,5 +88,33 @@ public class GuestMainActivity extends AppCompatActivity {
         else{
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_logout:
+                Call<MessageResponse> call= ClientUtils.authService.logout(UserInfo.getToken());
+                call.enqueue(new Callback<MessageResponse>() {
+                    @Override
+                    public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
+                        if(response.isSuccessful()){
+                            Toast.makeText(GuestMainActivity.this,response.body().getMessage(),Toast.LENGTH_SHORT);
+                            startActivity(new Intent(GuestMainActivity.this,LoginActivity.class));
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<MessageResponse> call, Throwable t) {
+
+                    }
+                });
+                break;
+            case R.id.nav_account:
+                startActivity(new Intent(this,AccountActivity.class));
+        }
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }

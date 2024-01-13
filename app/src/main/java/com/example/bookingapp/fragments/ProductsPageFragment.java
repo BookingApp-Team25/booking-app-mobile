@@ -1,11 +1,8 @@
-package com.example.bookingapp;
+package com.example.bookingapp.fragments;
 
-import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -14,16 +11,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.TextView;
 
+import com.example.bookingapp.Product;
+import com.example.bookingapp.ProductsPageViewModel;
 import com.example.bookingapp.R;
 import com.example.bookingapp.databinding.FragmentProductsPageBinding;
-import com.example.bookingapp.FragmentTransition;
-import com.example.bookingapp.Product;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
@@ -49,7 +45,7 @@ public class ProductsPageFragment extends Fragment {
         SearchView searchView = binding.searchText;
         productsViewModel.getText().observe(getViewLifecycleOwner(), searchView::setQueryHint);
 
-        Button btnFilters = binding.btnFilters;
+        ImageButton btnFilters = binding.btnFilters;
         btnFilters.setOnClickListener(v -> {
             Log.i("ShopApp", "Bottom Sheet Dialog");
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity(), R.style.FullScreenBottomSheetDialog);
@@ -58,7 +54,7 @@ public class ProductsPageFragment extends Fragment {
             bottomSheetDialog.show();
         });
 
-        Spinner spinner = binding.btnSort;
+//        Spinner spinner = binding.btnSort;
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_item,
@@ -66,7 +62,7 @@ public class ProductsPageFragment extends Fragment {
         // Specify the layout to use when the list of choices appears
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        spinner.setAdapter(arrayAdapter);
+//        spinner.setAdapter(arrayAdapter);
 //        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 //            @Override
 //            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

@@ -1,11 +1,11 @@
-package com.example.bookingapp;
+package com.example.bookingapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.bookingapp.databinding.ActivityGuestMainNavBarBinding;
+import com.example.bookingapp.R;
+import com.example.bookingapp.databinding.ActivityAccommodationsBinding;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -13,16 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
-import androidx.core.view.WindowCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
-import com.example.bookingapp.databinding.ActivityAccommodationsBinding;
 
 public class AccommodationsActivity extends AppCompatActivity {
 

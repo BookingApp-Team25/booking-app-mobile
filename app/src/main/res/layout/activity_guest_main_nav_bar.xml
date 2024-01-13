@@ -22,6 +22,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
+        android:forceDarkAllowed="false"
+        style="@style/Widget.Design.NavigationView"
         app:headerLayout="@layout/layout_host_nav_bar"
         app:menu="@menu/menu_nav_bar" />
 </androidx.drawerlayout.widget.DrawerLayout>

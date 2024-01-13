@@ -3,18 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/iconHome"
-        android:icon="@drawable/baseline_home_24"
-        android:title="@string/guest_iconHome"
-        app:showAsAction="always" />
-
-    <item
-        android:id="@+id/itemAccount"
-        android:icon="@drawable/baseline_account_circle_24"
-        android:title="@string/guest_itemAccount"
-        app:showAsAction="always" />
-
-    <item
         android:id="@+id/itemReservationView"
         android:title="@string/guest_itemReservationView"
         app:showAsAction="never" />

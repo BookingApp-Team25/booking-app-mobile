@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".activities.LoginActivity">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -21,7 +21,7 @@
                             android:id="@+id/textView26"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="40dp"
+                            android:layout_marginStart="48dp"
                             android:layout_marginEnd="262dp"
                             android:layout_marginBottom="7dp"
                             android:text="Repeat password"
@@ -33,7 +33,7 @@
                             android:id="@+id/textView24"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="44dp"
+                            android:layout_marginStart="48dp"
                             android:layout_marginEnd="309dp"
                             android:layout_marginBottom="3dp"
                             android:text="Password"
@@ -68,7 +68,7 @@
                             android:id="@+id/textView23"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="44dp"
+                            android:layout_marginStart="48dp"
                             android:layout_marginEnd="336dp"
                             android:layout_marginBottom="4dp"
                             android:text="Email"
@@ -103,7 +103,7 @@
                             android:id="@+id/textView27"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="44dp"
+                            android:layout_marginStart="48dp"
                             android:layout_marginEnd="305dp"
                             android:layout_marginBottom="4dp"
                             android:text="First name"
@@ -126,7 +126,7 @@
                             android:id="@+id/textView28"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="44dp"
+                            android:layout_marginStart="48dp"
                             android:layout_marginEnd="305dp"
                             android:layout_marginBottom="4dp"
                             android:text="Last name"
@@ -138,7 +138,7 @@
                             android:id="@+id/textView29"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="44dp"
+                            android:layout_marginStart="48dp"
                             android:layout_marginTop="21dp"
                             android:layout_marginEnd="319dp"
                             android:text="Address"
@@ -150,7 +150,7 @@
                             android:id="@+id/textView30"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="44dp"
+                            android:layout_marginStart="48dp"
                             android:layout_marginEnd="280dp"
                             android:layout_marginBottom="2dp"
                             android:text="Phone number"
@@ -162,7 +162,7 @@
                             android:id="@+id/buttonLogin4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="850dp"
+                            android:layout_marginTop="950dp"
                             android:layout_marginBottom="50dp"
                             android:backgroundTint="#969000"
                             android:text="Create account"
@@ -219,6 +219,48 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/imageView10" />
+
+                        <TextView
+                            android:id="@+id/textView11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="157dp"
+                            android:layout_marginTop="37dp"
+                            android:layout_marginEnd="157dp"
+                            android:text="Register me as:"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/phonenumberTxt" />
+
+                        <RadioGroup
+                            android:id="@+id/radioGroup"
+                            android:layout_width="300dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="80dp"
+                            android:layout_marginTop="16dp"
+                            android:orientation="horizontal"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView11">
+
+                                <RadioButton
+                                    android:id="@+id/radioHost"
+                                    android:layout_width="150dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Host"
+                                    tools:layout_editor_absoluteX="91dp"
+                                    tools:layout_editor_absoluteY="873dp" />
+
+                                <RadioButton
+                                    android:id="@+id/radioGuest"
+                                    android:layout_width="150dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Guest"
+                                    tools:layout_editor_absoluteX="242dp"
+                                    tools:layout_editor_absoluteY="872dp" />
+                        </RadioGroup>
+
+
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,5 @@
-package com.example.bookingapp;
+package com.example.bookingapp.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,7 +9,7 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.ListFragment;
-import com.example.bookingapp.ProductListAdapter;
+import com.example.bookingapp.adapters.ProductListAdapter;
 import com.example.bookingapp.databinding.FragmentProductsListBinding;
 import com.example.bookingapp.Product;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.example.bookingapp;
+package com.example.bookingapp.activities;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -9,10 +9,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toolbar;
 
-import com.example.bookingapp.databinding.ActivityHostMainBinding;
-import com.example.bookingapp.databinding.ActivityHostMainContentBinding;
+import com.example.bookingapp.R;
+import com.example.bookingapp.activities.AccommodationsActivity;
+import com.example.bookingapp.activities.AccountActivity;
+import com.example.bookingapp.activities.GuestReservationsActivity;
+import com.example.bookingapp.activities.NotificationsActivity;
 import com.example.bookingapp.databinding.ActivityHostMainNavBarBinding;
 import com.google.android.material.navigation.NavigationView;
 

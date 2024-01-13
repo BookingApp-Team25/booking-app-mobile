@@ -1,14 +1,16 @@
-package com.example.bookingapp;
+package com.example.bookingapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class GuestReservationsActivity extends AppCompatActivity {
+import com.example.bookingapp.R;
+
+public class NotificationsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_guest_reservations);
+        setContentView(R.layout.activity_notifications);
     }
 }
