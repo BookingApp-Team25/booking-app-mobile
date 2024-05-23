@@ -19,13 +19,14 @@ import com.example.bookingapp.Accommodation;
 import com.example.bookingapp.AccommodationsPageViewModel;
 import com.example.bookingapp.R;
 import com.example.bookingapp.databinding.FragmentAccommodationsPageBinding;
+import com.example.bookingapp.dto.AccommodationSummaryResponse;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 
 public class AccommodationsPageFragment extends Fragment {
 
-    public static ArrayList<Accommodation> accommodations = new ArrayList<Accommodation>();
+    public static ArrayList<AccommodationSummaryResponse> accommodations = new ArrayList<AccommodationSummaryResponse>();
     private AccommodationsPageViewModel productsViewModel;
     private FragmentAccommodationsPageBinding binding;
 
@@ -39,14 +40,15 @@ public class AccommodationsPageFragment extends Fragment {
         binding = FragmentAccommodationsPageBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        prepareProductList(accommodations);
+        //prepareProductList(accommodations);
+        productsViewModel.fetchAccommodations();
 
         SearchView searchView = binding.searchText;
         productsViewModel.getText().observe(getViewLifecycleOwner(), searchView::setQueryHint);
 
         Button btnFilters = binding.btnFilters;
         btnFilters.setOnClickListener(v -> {
-            Log.i("ShopApp", "Bottom Sheet Dialog");
+            Log.i("BookingApp", "Bottom Sheet Dialog");
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity(), R.style.FullScreenBottomSheetDialog);
             View dialogView = getLayoutInflater().inflate(R.layout.bottom_sheet_filter, null);
             bottomSheetDialog.setContentView(dialogView);
@@ -91,8 +93,7 @@ public class AccommodationsPageFragment extends Fragment {
 //            }
 //        });
 
-
-        FragmentTransition.to(AccommodationsListFragment.newInstance(accommodations), getActivity(), false, R.id.scroll_products_list);
+        FragmentTransition.to(AccommodationsListFragment.newInstance(productsViewModel.getAccommodations()), getActivity(), false, R.id.scroll_products_list);
 
         return root;
     }
