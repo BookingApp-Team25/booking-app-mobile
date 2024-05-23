@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ClientUtils {
 
     //EXAMPLE: http://192.168.43.73:8080/api/
-    public static final String SERVICE_API_PATH = "http://192.168.0.30:8080/api/";
+    public static final String SERVICE_API_PATH = "http://10.0.2.2:8080/api/";
 
     /*
      * Ovo ce nam sluziti za debug, da vidimo da li zahtevi i odgovori idu

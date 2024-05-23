@@ -23,5 +23,9 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <include
+        android:id="@+id/accommodations_view_layout"
+        layout="@layout/activity_accommodations_content"
+        />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

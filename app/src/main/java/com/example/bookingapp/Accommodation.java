@@ -5,23 +5,23 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
-public class Product implements Parcelable {
+public class Accommodation implements Parcelable {
     private Long id;
     private String title;
     private String description;
     private int image;
 
-    public Product(Long id, String title, String description, int image) {
+    public Accommodation(Long id, String title, String description, int image) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.image = image;
     }
 
-    public Product() {
+    public Accommodation() {
     }
     // Konstruktor za čitanje iz Parcel objekta
-    protected Product(Parcel in) {
+    protected Accommodation(Parcel in) {
         // Čitanje ostalih atributa proizvoda iz Parcel objekta
         id = in.readLong();
         title = in.readString();
@@ -63,7 +63,7 @@ public class Product implements Parcelable {
 
     @Override
     public String toString() {
-        return "Product{" +
+        return "Accommodation{" +
                 "title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", image='" + image + '\'' +
@@ -83,15 +83,15 @@ public class Product implements Parcelable {
         dest.writeInt(image);
     }
 
-    public static final Creator<Product> CREATOR = new Creator<Product>() {
+    public static final Creator<Accommodation> CREATOR = new Creator<Accommodation>() {
         @Override
-        public Product createFromParcel(Parcel in) {
-            return new Product(in);
+        public Accommodation createFromParcel(Parcel in) {
+            return new Accommodation(in);
         }
 
         @Override
-        public Product[] newArray(int size) {
-            return new Product[size];
+        public Accommodation[] newArray(int size) {
+            return new Accommodation[size];
         }
     };
 }

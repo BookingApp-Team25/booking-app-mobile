@@ -16,7 +16,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.bookingapp.Product;
+import com.example.bookingapp.Accommodation;
 import com.example.bookingapp.R;
 import com.example.bookingapp.activities.AccommodationsActivity;
 
@@ -30,12 +30,12 @@ import java.util.ArrayList;
  * Nasledjivanjem bilo kog adaptera, dobicemo
  * nekolko metoda koje moramo da referinisemo da bi adapter ispravno radio.
  * */
-public class ProductListAdapter extends ArrayAdapter<Product> {
-    private ArrayList<Product> aProducts;
+public class AccommodationListAdapter extends ArrayAdapter<Accommodation> {
+    private ArrayList<Accommodation> aAccommodations;
 
-    public ProductListAdapter(Context context, ArrayList<Product> products){
-        super(context, R.layout.product_card, products);
-        aProducts = products;
+    public AccommodationListAdapter(Context context, ArrayList<Accommodation> accommodations){
+        super(context, R.layout.accommodation_card, accommodations);
+        aAccommodations = accommodations;
 
     }
     /*
@@ -43,7 +43,7 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
      * */
     @Override
     public int getCount() {
-        return aProducts.size();
+        return aAccommodations.size();
     }
 
     /*
@@ -51,8 +51,8 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
      * */
     @Nullable
     @Override
-    public Product getItem(int position) {
-        return aProducts.get(position);
+    public Accommodation getItem(int position) {
+        return aAccommodations.get(position);
     }
 
     /*
@@ -78,9 +78,9 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        Product product = getItem(position);
+        Accommodation accommodation = getItem(position);
         if(convertView == null){
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.product_card,
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.accommodation_card,
                     parent, false);
         }
         LinearLayout productCard = convertView.findViewById(R.id.product_card_item);
@@ -88,14 +88,14 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
         TextView productTitle = convertView.findViewById(R.id.product_title);
         TextView productDescription = convertView.findViewById(R.id.product_description);
 
-        if(product != null){
-            imageView.setImageResource(product.getImage());
-            productTitle.setText(product.getTitle());
-            productDescription.setText(product.getDescription());
+        if(accommodation != null){
+            imageView.setImageResource(accommodation.getImage());
+            productTitle.setText(accommodation.getTitle());
+            productDescription.setText(accommodation.getDescription());
             productCard.setOnClickListener(v -> {
                 // Handle click on the item at 'position'
-                Log.i("ShopApp", "Clicked: " + product.getTitle() + ", id: " +
-                        product.getId().toString());
+                Log.i("ShopApp", "Clicked: " + accommodation.getTitle() + ", id: " +
+                        accommodation.getId().toString());
 //                Toast.makeText(getContext(), "Clicked: " + product.getTitle()  +
 //                        ", id: " + product.getId().toString(), Toast.LENGTH_SHORT).show();
 

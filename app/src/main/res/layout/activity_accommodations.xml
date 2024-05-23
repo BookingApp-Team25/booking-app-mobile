@@ -7,11 +7,10 @@
     android:layout_height="match_parent"
     tools:context=".activities.AccommodationsActivity">
 
-
-    <include
-        android:id="@+id/accommodations_view_layout"
-        layout="@layout/activity_accommodations_content"
-        />
+    <!--    <include-->
+    <!--        android:id="@+id/accommodations_view_layout"-->
+    <!--        layout="@layout/activity_accommodations_content"-->
+    <!--        />-->
 
     <include
         android:id="@+id/drawer_layout"

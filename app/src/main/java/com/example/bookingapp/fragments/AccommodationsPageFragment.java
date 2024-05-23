@@ -13,39 +13,38 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 
-import com.example.bookingapp.Product;
-import com.example.bookingapp.ProductsPageViewModel;
+import com.example.bookingapp.Accommodation;
+import com.example.bookingapp.AccommodationsPageViewModel;
 import com.example.bookingapp.R;
-import com.example.bookingapp.databinding.FragmentProductsPageBinding;
+import com.example.bookingapp.databinding.FragmentAccommodationsPageBinding;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 
-public class ProductsPageFragment extends Fragment {
+public class AccommodationsPageFragment extends Fragment {
 
-    public static ArrayList<Product> products = new ArrayList<Product>();
-    private ProductsPageViewModel productsViewModel;
-    private FragmentProductsPageBinding binding;
+    public static ArrayList<Accommodation> accommodations = new ArrayList<Accommodation>();
+    private AccommodationsPageViewModel productsViewModel;
+    private FragmentAccommodationsPageBinding binding;
 
-    public static ProductsPageFragment newInstance() {
-        return new ProductsPageFragment();
+    public static AccommodationsPageFragment newInstance() {
+        return new AccommodationsPageFragment();
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        productsViewModel = new ViewModelProvider(this).get(ProductsPageViewModel.class);
+        productsViewModel = new ViewModelProvider(this).get(AccommodationsPageViewModel.class);
 
-        binding = FragmentProductsPageBinding.inflate(inflater, container, false);
+        binding = FragmentAccommodationsPageBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        prepareProductList(products);
+        prepareProductList(accommodations);
 
         SearchView searchView = binding.searchText;
         productsViewModel.getText().observe(getViewLifecycleOwner(), searchView::setQueryHint);
 
-        ImageButton btnFilters = binding.btnFilters;
+        Button btnFilters = binding.btnFilters;
         btnFilters.setOnClickListener(v -> {
             Log.i("ShopApp", "Bottom Sheet Dialog");
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity(), R.style.FullScreenBottomSheetDialog);
@@ -54,7 +53,7 @@ public class ProductsPageFragment extends Fragment {
             bottomSheetDialog.show();
         });
 
-//        Spinner spinner = binding.btnSort;
+        Spinner spinner = binding.btnSort;
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_item,
@@ -62,7 +61,7 @@ public class ProductsPageFragment extends Fragment {
         // Specify the layout to use when the list of choices appears
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-//        spinner.setAdapter(arrayAdapter);
+        spinner.setAdapter(arrayAdapter);
 //        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 //            @Override
 //            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -93,7 +92,7 @@ public class ProductsPageFragment extends Fragment {
 //        });
 
 
-        FragmentTransition.to(ProductsListFragment.newInstance(products), getActivity(), false, R.id.scroll_products_list);
+        FragmentTransition.to(AccommodationsListFragment.newInstance(accommodations), getActivity(), false, R.id.scroll_products_list);
 
         return root;
     }
@@ -104,10 +103,10 @@ public class ProductsPageFragment extends Fragment {
         binding = null;
     }
 
-    private void prepareProductList(ArrayList<Product> products){
-        products.add(new Product(1L, "Accommodation 1", "Description 1", R.drawable.accommodation1));
-        products.add(new Product(2L, "Accommodation 2", "Description 2", R.drawable.accommodation2));
-        products.add(new Product(3L, "Accommodation 3", "Description 3", R.drawable.accommodation1));
-        products.add(new Product(4L, "Accommodation 4", "Description 4", R.drawable.accommodation2));
+    private void prepareProductList(ArrayList<Accommodation> accommodations){
+        accommodations.add(new Accommodation(1L, "Accommodation 1", "Description 1", R.drawable.accommodation1));
+        accommodations.add(new Accommodation(2L, "Accommodation 2", "Description 2", R.drawable.accommodation2));
+        accommodations.add(new Accommodation(3L, "Accommodation 3", "Description 3", R.drawable.accommodation1));
+        accommodations.add(new Accommodation(4L, "Accommodation 4", "Description 4", R.drawable.accommodation2));
     }
 }
