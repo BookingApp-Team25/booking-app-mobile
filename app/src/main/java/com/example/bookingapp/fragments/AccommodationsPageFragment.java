@@ -104,6 +104,7 @@ public class AccommodationsPageFragment extends Fragment {
         binding = null;
     }
 
+    // Dummy data currently not in use
     private void prepareProductList(ArrayList<Accommodation> accommodations){
         accommodations.add(new Accommodation(1L, "Accommodation 1", "Description 1", R.drawable.accommodation1));
         accommodations.add(new Accommodation(2L, "Accommodation 2", "Description 2", R.drawable.accommodation2));

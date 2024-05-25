@@ -148,20 +148,20 @@ public class AccommodationListAdapter extends ArrayAdapter<AccommodationSummaryR
             productDescription.setText(accommodation.getDescription()); // Adjust this part according to your AccommodationSummaryResponse class
             accommodationPrice.setText("price per night: " + accommodation.getPrice().toString() + "$");
             accommodationRating.setText(accommodation.getRating().toString() + "★");
-            productCard.setOnClickListener(v -> {
-                // Handle click on the item at 'position'
-                Log.i("ShopApp", "Clicked: " + accommodation.getName());
-
-                // Uncomment the next line to start a new activity
-                Intent intent = new Intent(getContext(), AccommodationsActivity.class);
-
-                // If you want to pass data to the new activity, you can use intent.putExtra
-                // For example, passing the product ID:
-                // intent.putExtra("product_id", product.getId());
-
-                // Uncomment the next line to start the new activity
-                getContext().startActivity(intent);
-            });
+//            productCard.setOnClickListener(v -> {
+//                // Handle click on the item at 'position'
+//                Log.i("ShopApp", "Clicked: " + accommodation.getName());
+//
+//                // Uncomment the next line to start a new activity
+//                Intent intent = new Intent(getContext(), AccommodationsActivity.class);
+//
+//                // If you want to pass data to the new activity, you can use intent.putExtra
+//                // For example, passing the product ID:
+//                // intent.putExtra("product_id", product.getId());
+//
+//                // Uncomment the next line to start the new activity
+//                getContext().startActivity(intent);
+//            });
         }
 
         return convertView;

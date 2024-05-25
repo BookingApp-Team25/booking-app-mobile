@@ -1,5 +1,6 @@
 package com.example.bookingapp.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 
 import com.example.bookingapp.Accommodation;
+import com.example.bookingapp.activities.AccommodationsActivity;
 import com.example.bookingapp.adapters.AccommodationListAdapter;
 import com.example.bookingapp.databinding.FragmentAccommodationsListBinding;
 import com.example.bookingapp.dto.AccommodationSummaryResponse;
@@ -133,7 +135,15 @@ public class AccommodationsListFragment extends ListFragment {
     @Override
     public void onListItemClick(@NonNull ListView l, @NonNull View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        // Handle the click on item at 'position'
+        AccommodationSummaryResponse selectedAccommodation = adapter.getItem(position);
+        if (selectedAccommodation != null) {
+            Log.i("BookingApp", "Clicked: " + selectedAccommodation.getName());
+
+            Intent intent = new Intent(getContext(), AccommodationsActivity.class);
+            // Pass the entire AccommodationSummaryResponse object
+            intent.putExtra("accommodation", selectedAccommodation);
+            getContext().startActivity(intent);
+        }
     }
 }
 
