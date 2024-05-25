@@ -141,7 +141,7 @@ public class AccommodationsListFragment extends ListFragment {
 
             Intent intent = new Intent(getContext(), AccommodationsActivity.class);
             // Pass the entire AccommodationSummaryResponse object
-            intent.putExtra("accommodation", selectedAccommodation);
+            intent.putExtra("accommodationId", selectedAccommodation.getAccommodationId());
             getContext().startActivity(intent);
         }
     }
