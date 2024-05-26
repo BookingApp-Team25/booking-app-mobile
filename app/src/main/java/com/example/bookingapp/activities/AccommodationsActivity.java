@@ -2,11 +2,15 @@ package com.example.bookingapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +22,7 @@ import com.example.bookingapp.R;
 import com.example.bookingapp.adapters.ImagePagerAdapter;
 import com.example.bookingapp.databinding.ActivityAccommodationsBinding;
 import com.example.bookingapp.dto.AccommodationDetailsResponse;
+import com.example.bookingapp.entities.DatePeriod;
 import com.example.bookingapp.network.RetrofitClient;
 import com.example.bookingapp.network.AccommodationService;
 import com.google.android.material.navigation.NavigationView;
@@ -27,7 +32,14 @@ import android.view.MenuItem;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import retrofit2.Call;
@@ -45,8 +57,12 @@ public class AccommodationsActivity extends AppCompatActivity {
     private androidx.appcompat.widget.Toolbar toolbar;
     private NavigationView navigationView;
     private ViewPager2 viewPager;
-
     private MapView mapView; // Add MapView
+
+    private AccommodationDetailsResponse accommodation;
+
+    private UUID accommodationId;
+    private UUID hostId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +90,7 @@ public class AccommodationsActivity extends AppCompatActivity {
         // Retrieve the accommodationId from the Intent
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("accommodationId")) {
-            UUID accommodationId = (UUID) intent.getSerializableExtra("accommodationId");
+            accommodationId = (UUID) intent.getSerializableExtra("accommodationId");
             Log.d(TAG, "Accommodation ID: " + accommodationId);
             fetchAccommodationDetails(accommodationId);
         } else {
@@ -82,12 +98,22 @@ public class AccommodationsActivity extends AppCompatActivity {
         }
 
         // Pressing the button triggers the ReservationActivity
-        Button reserveButton = findViewById(R.id.button);
+        Button reserveButton = findViewById(R.id.make_reserbation_button);
         reserveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Navigate to the Reservation Activity
                 Intent intent = new Intent(AccommodationsActivity.this, ReservationActivity.class);
+
+                int minGuests = accommodation.getMinGuests();
+                int maxGuests = accommodation.getMaxGuests();
+
+                intent.putParcelableArrayListExtra("availability", (ArrayList<? extends Parcelable>) accommodation.getAvailability());
+                intent.putExtra("minGuests", minGuests);
+                intent.putExtra("maxGuests", maxGuests);
+                intent.putExtra("hostId", hostId.toString());
+                intent.putExtra("accommodationId", accommodationId.toString());
+
                 startActivity(intent);
             }
         });
@@ -103,6 +129,8 @@ public class AccommodationsActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     Log.d(TAG, "Accommodation details retrieved: " + response.body());
                     populateUI(response.body());
+                    accommodation = new AccommodationDetailsResponse(response.body());
+                    hostId = (UUID) response.body().getHostId();
                 } else {
                     Log.d(TAG, "Response received but not successful: " + response.message());
                 }

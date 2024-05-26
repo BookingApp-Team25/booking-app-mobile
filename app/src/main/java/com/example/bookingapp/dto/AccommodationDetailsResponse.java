@@ -52,6 +52,27 @@ public class AccommodationDetailsResponse {
         this.rating=rating;
     }
 
+    public AccommodationDetailsResponse(AccommodationDetailsResponse accommdation) {
+        this.id = accommdation.id;
+        this.name = accommdation.name;
+        this.description = accommdation.description;
+        this.location = accommdation.location;
+        this.amenities = accommdation.amenities;
+        this.photos = accommdation.photos;
+        this.minGuests = accommdation.minGuests;
+        this.maxGuests = accommdation.maxGuests;
+        this.type = accommdation.type;
+        this.availability = accommdation.availability;
+        //this.pricelist = pricelist;
+        this.price = accommdation.price;
+        this.daysBefore = accommdation.daysBefore;
+        this.policy = accommdation.policy;
+        this.accommodationOnHoldStatus = accommdation.accommodationOnHoldStatus;
+        this.hostId=accommdation.hostId;
+        this.hostUsername=accommdation.hostUsername;
+        this.rating=accommdation.rating;
+    }
+
     public String getHostUsername() {
         return hostUsername;
     }

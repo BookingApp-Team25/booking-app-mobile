@@ -26,6 +26,10 @@
             android:name=".activities.GuestReservationsActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.ReservationActivity"
+            android:exported="false"
+            android:label="Reservation Activity" />
+        <activity
             android:name=".activities.AccommodationsActivity"
             android:exported="false"
             android:label="@string/title_activity_accommodations"
