@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
@@ -43,8 +45,24 @@ public class AccommodationsPageFragment extends Fragment {
         //prepareProductList(accommodations);
         productsViewModel.fetchAccommodations();
 
-        SearchView searchView = binding.searchText;
-        productsViewModel.getText().observe(getViewLifecycleOwner(), searchView::setQueryHint);
+        Button btnSearch = root.findViewById(R.id.btnSearch);
+        btnSearch.setOnClickListener(v -> {
+            if (isAdded()) { // Check if the fragment is added to the activity
+                // Instantiate and display the search fragment
+                AccommodationSearchFragment searchFragment = new AccommodationSearchFragment();
+                FragmentManager fragmentManager = getParentFragmentManager();
+                if (fragmentManager != null) {
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    transaction.replace(R.id.fragment_nav_content_main, searchFragment); // Replace 'container' with your actual container ID
+                    transaction.addToBackStack("accommodation_page_fragment"); // Add to back stack to allow back navigation
+                    transaction.commit();
+                } else {
+                    Log.e("YourFragment", "Fragment manager is null");
+                }
+            } else {
+                Log.e("YourFragment", "Fragment is not added to activity");
+            }
+        });
 
         Button btnFilters = binding.btnFilters;
         btnFilters.setOnClickListener(v -> {
@@ -54,44 +72,6 @@ public class AccommodationsPageFragment extends Fragment {
             bottomSheetDialog.setContentView(dialogView);
             bottomSheetDialog.show();
         });
-
-        Spinner spinner = binding.btnSort;
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_spinner_item,
-                getResources().getStringArray(R.array.sort_array));
-        // Specify the layout to use when the list of choices appears
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        spinner.setAdapter(arrayAdapter);
-//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//
-//                AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-//                dialog.setMessage("Change the sort option?")
-//                        .setCancelable(false)
-//                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int id) {
-//                                Log.v("ShopApp", (String) parent.getItemAtPosition(position));
-//                                ((TextView) parent.getChildAt(0)).setTextColor(Color.MAGENTA);
-//                            }
-//                        })
-//                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int id) {
-//                                dialog.cancel();
-//                            }
-//                        });
-//                AlertDialog alert = dialog.create();
-//                alert.show();
-//            }
-//
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//                // TODO Auto-generated method stub
-//            }
-//        });
 
         FragmentTransition.to(AccommodationsListFragment.newInstance(productsViewModel.getAccommodations()), getActivity(), false, R.id.scroll_products_list);
 

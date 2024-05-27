@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_accommodation_search"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Spinner for cities -->
+    <Spinner
+        android:id="@+id/spinner_cities"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:entries="@array/cities_array"
+        android:padding="16dp" />
+
+    <!-- Separation line below Spinner -->
+    <View
+        android:id="@+id/separator_line_1"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="#CCCCCC"
+        app:layout_constraintTop_toBottomOf="@id/spinner_cities"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- EditText for start date -->
+    <EditText
+        android:id="@+id/editText_start_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Start Date"
+        android:inputType="date"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/separator_line_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- EditText for end date -->
+    <EditText
+        android:id="@+id/editText_end_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="End Date"
+        android:inputType="date"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/editText_start_date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Separation line below date inputs -->
+    <View
+        android:id="@+id/separator_line_2"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="#CCCCCC"
+        app:layout_constraintTop_toBottomOf="@id/editText_end_date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- NumberPicker for selecting number of people -->
+    <NumberPicker
+        android:id="@+id/numberPicker_people"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/separator_line_2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+<!--        android:minValue="1"-->
+<!--        android:maxValue="10"-->
+<!--        android:wrapSelectorWheel="true" />-->
+
+    <!-- Separation line above Button -->
+    <View
+        android:id="@+id/separator_line_3"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="#CCCCCC"
+        app:layout_constraintTop_toBottomOf="@id/numberPicker_people"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Button for searching -->
+    <Button
+        android:id="@+id/button_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="Search"
+        app:layout_constraintTop_toBottomOf="@id/separator_line_3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
