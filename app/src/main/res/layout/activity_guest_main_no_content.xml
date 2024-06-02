@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HostMainActivity">
+    tools:context=".activities.HostMainActivity">
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
@@ -23,5 +23,9 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <include
+        android:id="@+id/accommodations_view_layout"
+        layout="@layout/activity_accommodations_content"
+        />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

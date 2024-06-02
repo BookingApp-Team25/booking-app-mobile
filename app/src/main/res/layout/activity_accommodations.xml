@@ -5,13 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AccommodationsActivity">
+    tools:context=".activities.AccommodationsActivity">
 
-
-    <include
-        android:id="@+id/accommodations_view_layout"
-        layout="@layout/activity_accommodations_content"
-        />
+    <!--    <include-->
+    <!--        android:id="@+id/accommodations_view_layout"-->
+    <!--        layout="@layout/activity_accommodations_content"-->
+    <!--        />-->
 
     <include
         android:id="@+id/drawer_layout"

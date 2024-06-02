@@ -8,11 +8,17 @@
     >
     <fragment
         android:id="@+id/nav_products"
-        android:name="com.example.bookingapp.ProductsPageFragment"
+        android:name="com.example.bookingapp.fragments.AccommodationsPageFragment"
         android:label="Products"
-        tools:layout="@layout/fragment_products_page"
+        tools:layout="@layout/fragment_accommodations_page"
         />
 
+    <activity
+        android:id="@+id/nav_logout"
+        android:name="com.example.bookingapp.activities.LoginActivity"
+        android:label="@string/nav_logout"
+        tools:layout="@layout/activity_login"
+        />
 <!--    <fragment-->
 <!--        android:id="@+id/nav_new"-->
 <!--        android:name="com.example.shopapp.fragments.new_product.NewProductFragment"-->
