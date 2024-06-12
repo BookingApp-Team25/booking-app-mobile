@@ -29,6 +29,7 @@ import com.google.android.material.navigation.NavigationView;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import org.osmdroid.config.Configuration;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
@@ -164,7 +165,9 @@ public class AccommodationsActivity extends AppCompatActivity {
         ImagePagerAdapter adapter = new ImagePagerAdapter(this, imageUrls);
         viewPager.setAdapter(adapter);
 
-        // Add MapView
+        // Somewhere in your application initialization, before using any OsmDroid components
+        Configuration.getInstance().setUserAgentValue("BookingApp");
+
         mapView = findViewById(R.id.mapView);
         mapView.getController().setZoom(15);
         mapView.getController().setCenter(new GeoPoint(45.267136, 19.833549));

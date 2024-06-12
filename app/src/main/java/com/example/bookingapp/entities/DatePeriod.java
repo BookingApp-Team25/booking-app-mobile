@@ -81,4 +81,13 @@ public class DatePeriod implements Parcelable {
     public long calculateDurationInDays() {
         return ChronoUnit.DAYS.between(startDate, endDate) + 1;
     }
+
+    @Override
+    public String toString() {
+        return "DatePeriod{" +
+                "id=" + id +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                '}';
+    }
 }

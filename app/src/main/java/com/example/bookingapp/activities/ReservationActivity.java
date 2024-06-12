@@ -1,5 +1,7 @@
 package com.example.bookingapp.activities;
 
+import static com.example.bookingapp.security.UserInfo.getToken;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,14 +19,22 @@ import com.example.bookingapp.dto.ReservationRequest;
 import com.example.bookingapp.dto.enums.ReservationStatus;
 import com.example.bookingapp.entities.DatePeriod;
 import com.example.bookingapp.network.ReservationService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializer;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -107,13 +117,32 @@ public class ReservationActivity extends AppCompatActivity {
     }
 
     private void makeReservation(ReservationRequest reservationRequest) {
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(chain -> {
+            Request original = chain.request();
+            String token = getToken();
+            Request.Builder requestBuilder = original.newBuilder()
+                    .header("Authorization", token);
+            Request request = requestBuilder.build();
+            return chain.proceed(request);
+        });
+
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDate.class, (JsonSerializer<LocalDate>) (src, typeOfSrc, context) ->
+                        src == null ? null : new JsonPrimitive(src.toString()))
+                .registerTypeAdapter(LocalDate.class, (JsonDeserializer<LocalDate>) (json, typeOfT, context) ->
+                        LocalDate.parse(json.getAsString(), DateTimeFormatter.ISO_LOCAL_DATE))
+                .create();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://10.0.2.2:8080/api/")
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(httpClient.build())
                 .build();
 
         ReservationService apiService = retrofit.create(ReservationService.class);
         Call<MessageResponse> call = apiService.createReservation(reservationRequest);
+        Log.d("ReservationRequest", reservationRequest.toString());
 
         call.enqueue(new Callback<MessageResponse>() {
             @Override

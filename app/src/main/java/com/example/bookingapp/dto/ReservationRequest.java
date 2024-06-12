@@ -84,4 +84,17 @@ public class ReservationRequest {
     public void setAccommodationId(UUID accommodationId) {
         this.accommodationId = accommodationId;
     }
+
+    @Override
+    public String toString() {
+        return "ReservationRequest{" +
+                "reservationId=" + reservationId +
+                ", guestId=" + guestId +
+                ", hostId=" + hostId +
+                ", accommodationId=" + accommodationId +
+                ", reservationStatus=" + reservationStatus +
+                ", reservedDate=" + reservedDate.toString() +
+                ", price=" + price +
+                '}';
+    }
 }

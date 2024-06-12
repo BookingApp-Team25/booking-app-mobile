@@ -125,4 +125,17 @@ public class AccommodationSummaryResponse implements Parcelable {
     public void setOnHoldStatus(AccommodationOnHoldStatus onHoldStatus) {
         this.onHoldStatus = onHoldStatus;
     }
+
+    @Override
+    public String toString() {
+        return "AccommodationSummaryResponse{" +
+                "accommodationId=" + accommodationId +
+                ", name='" + name + '\'' +
+                ", photo='" + photo + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", rating=" + rating +
+                ", onHoldStatus=" + onHoldStatus +
+                '}';
+    }
 }

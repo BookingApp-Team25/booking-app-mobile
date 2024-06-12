@@ -22,8 +22,8 @@ public interface AccommodationService {
     @GET("accommodation/results")
     Call<Collection<AccommodationSummaryResponse>> searchAccommodations(
             @Query("city") String city,
-            @Query("startDate") String startDate,
-            @Query("endDate") String endDate,
+            @Query("dateStart") String startDate,
+            @Query("dateEnd") String endDate,
             @Query("guestNumber") int guestNumber
     );
 }

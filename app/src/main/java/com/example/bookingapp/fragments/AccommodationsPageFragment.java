@@ -7,6 +7,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
@@ -25,25 +26,31 @@ import com.example.bookingapp.dto.AccommodationSummaryResponse;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class AccommodationsPageFragment extends Fragment {
 
-    public static ArrayList<AccommodationSummaryResponse> accommodations = new ArrayList<AccommodationSummaryResponse>();
-    private AccommodationsPageViewModel productsViewModel;
+    public static LiveData<Collection<AccommodationSummaryResponse>> accommodations;
+    private AccommodationsPageViewModel accommodationsViewModel;
     private FragmentAccommodationsPageBinding binding;
 
     public static AccommodationsPageFragment newInstance() {
         return new AccommodationsPageFragment();
     }
 
+    public static AccommodationsPageFragment newInstance(LiveData<Collection<AccommodationSummaryResponse>> accommodationsLiveData) {
+        accommodations = accommodationsLiveData;
+        return new AccommodationsPageFragment();
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        productsViewModel = new ViewModelProvider(this).get(AccommodationsPageViewModel.class);
+        accommodationsViewModel = new ViewModelProvider(this).get(AccommodationsPageViewModel.class);
 
         binding = FragmentAccommodationsPageBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         //prepareProductList(accommodations);
-        productsViewModel.fetchAccommodations();
+        accommodationsViewModel.fetchAccommodations();
 
         Button btnSearch = root.findViewById(R.id.btnSearch);
         btnSearch.setOnClickListener(v -> {
@@ -73,7 +80,23 @@ public class AccommodationsPageFragment extends Fragment {
             bottomSheetDialog.show();
         });
 
-        FragmentTransition.to(AccommodationsListFragment.newInstance(productsViewModel.getAccommodations()), getActivity(), false, R.id.scroll_products_list);
+        if (accommodations != null) {
+            try {
+                accommodations.observe(getViewLifecycleOwner(), accommodationsList -> {
+                     if (!accommodationsList.isEmpty()) {
+                         FragmentTransition.to(AccommodationsListFragment.newInstance(accommodations), getActivity(), false, R.id.scroll_products_list);
+                     }
+                     else
+                         FragmentTransition.to(AccommodationsListFragment.newInstance(accommodationsViewModel.getAccommodations()), getActivity(), false, R.id.scroll_products_list);
+                });
+            }
+            catch (Exception e) {
+                Log.e("Exception", e.getMessage());
+                FragmentTransition.to(AccommodationsListFragment.newInstance(accommodationsViewModel.getAccommodations()), getActivity(), false, R.id.scroll_products_list);
+            }
+        }
+        else
+            FragmentTransition.to(AccommodationsListFragment.newInstance(accommodationsViewModel.getAccommodations()), getActivity(), false, R.id.scroll_products_list);
 
         return root;
     }
@@ -82,6 +105,7 @@ public class AccommodationsPageFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+        accommodations = null;
     }
 
     // Dummy data currently not in use

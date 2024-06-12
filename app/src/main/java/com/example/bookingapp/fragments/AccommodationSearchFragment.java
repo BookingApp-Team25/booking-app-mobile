@@ -1,6 +1,7 @@
 package com.example.bookingapp.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.example.bookingapp.AccommodationSearchViewModel;
 import com.example.bookingapp.R;
 
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -48,6 +50,8 @@ public class AccommodationSearchFragment extends Fragment {
 
         // Set OnClickListener for the search button
         buttonSearch.setOnClickListener(v -> {
+            Log.d("AccommodationSearchFragment - ButtonSearch", "Clicked the button!");
+
             String selectedCity = spinnerCities.getSelectedItem().toString();
             String startDate = editTextStartDate.getText().toString();
             String endDate = editTextEndDate.getText().toString();
@@ -56,11 +60,12 @@ public class AccommodationSearchFragment extends Fragment {
             // Call ViewModel's search function with collected data
             viewModel.searchAccommodations(selectedCity, startDate, endDate, numberOfPeople);
 
-            AccommodationsListFragment listFragment = AccommodationsListFragment.newInstance(viewModel.getAccommodations());
+            AccommodationsPageFragment pageFragment = AccommodationsPageFragment.newInstance(viewModel.getAccommodations());
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_accommodation_search, listFragment);
+            transaction.replace(R.id.fragment_accommodation_search, pageFragment);
             transaction.addToBackStack(null); // Add to back stack to allow back navigation
             transaction.commit();
+            getParentFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         });
 
         return root;
