@@ -12,17 +12,15 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bookingapp.R;
+import com.example.bookingapp.clients.ClientUtils;
 import com.example.bookingapp.dto.MessageResponse;
 import com.example.bookingapp.dto.ReservationRequest;
 import com.example.bookingapp.dto.enums.ReservationStatus;
 import com.example.bookingapp.entities.DatePeriod;
-import com.example.bookingapp.network.ReservationService;
+import com.example.bookingapp.clients.ReservationService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 import retrofit2.Call;
@@ -107,12 +105,7 @@ public class ReservationActivity extends AppCompatActivity {
     }
 
     private void makeReservation(ReservationRequest reservationRequest) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8080/api/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        ReservationService apiService = retrofit.create(ReservationService.class);
+        ReservationService apiService = ClientUtils.reservationService;
         Call<MessageResponse> call = apiService.createReservation(reservationRequest);
 
         call.enqueue(new Callback<MessageResponse>() {

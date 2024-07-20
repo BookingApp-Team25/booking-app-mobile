@@ -1,4 +1,4 @@
-package com.example.bookingapp.network;
+package com.example.bookingapp.clients;
 
 import com.example.bookingapp.dto.AccommodationDetailsResponse;
 import com.example.bookingapp.dto.MessageResponse;
