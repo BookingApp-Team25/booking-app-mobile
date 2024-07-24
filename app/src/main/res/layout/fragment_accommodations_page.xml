@@ -11,37 +11,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#FFFFFF"
         android:orientation="vertical"
-        tools:context=".AccommodationsPageFragment"
-        >
-<!--        <LinearLayout-->
-<!--            android:id="@+id/linear1"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="horizontal"-->
-<!--            android:layout_marginLeft="10dp"-->
-<!--            android:layout_marginRight="10dp"-->
-<!--            android:layout_marginTop="10dp">-->
+        android:visibility="visible"
+        tools:context=".AccommodationsPageFragment">
 
-<!--            <androidx.appcompat.widget.SearchView-->
-<!--                android:id="@+id/search_text"-->
-<!--                app:queryHint="Search"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:background="@drawable/border_background"-->
-<!--                android:theme="@style/Theme.ShopApp"-->
-
-<!--                />-->
-<!--        </LinearLayout>-->
         <LinearLayout
             android:id="@+id/linear2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
-            >
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btnSearch"
@@ -58,25 +40,20 @@
                 android:layout_weight="0.7"
                 android:text="@string/filters"
                 tools:ignore="TextContrastCheck" />
-<!--            <Spinner-->
-<!--                android:id="@+id/btnSort"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="10dp"-->
-<!--                android:layout_weight="0.3"-->
-<!--                android:text="@string/sort"-->
-<!--                android:tooltipText="@string/sort"-->
-<!--                android:contentDescription="@string/sort"-->
-<!--                />-->
-            <!--            android:background="?android:attr/colorPrimary"-->
         </LinearLayout>
 
         <RelativeLayout
+            android:id="@+id/scroll_products_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:id="@+id/scroll_products_list"
-            />
+            android:layout_margin="10dp">
+
+            <ListView
+                android:id="@android:id/list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/accommodation_card" />
+        </RelativeLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,6 +16,13 @@
         android:layout_height="match_parent"
         />
 
+<!--    <include-->
+<!--        android:id="@+id/activity_guest_main"-->
+<!--        layout="@layout/activity_guest_main"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        />-->
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"

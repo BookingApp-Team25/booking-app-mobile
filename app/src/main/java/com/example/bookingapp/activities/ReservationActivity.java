@@ -2,6 +2,7 @@ package com.example.bookingapp.activities;
 
 import static com.example.bookingapp.security.UserInfo.getToken;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.DatePicker;
 import android.widget.NumberPicker;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bookingapp.R;
@@ -29,6 +31,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -73,6 +76,9 @@ public class ReservationActivity extends AppCompatActivity {
             numberPicker.setMaxValue(maxGuests);
             numberPicker.setWrapSelectorWheel(true);
 
+            setDatePickerMinMax(startDatePicker, availability);
+            setDatePickerMinMax(endDatePicker, availability);
+
             buttonConfirmReservation.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -116,6 +122,27 @@ public class ReservationActivity extends AppCompatActivity {
         }
     }
 
+    private void setDatePickerMinMax(DatePicker datePicker, ArrayList<DatePeriod> availability) {
+        if (availability == null || availability.isEmpty()) {
+            return;
+        }
+
+        // Determine the min and max dates
+        Calendar minDate = Calendar.getInstance();
+        Calendar maxDate = Calendar.getInstance();
+        maxDate.add(Calendar.YEAR, 1); // For example, set the max date to one year from now
+
+        datePicker.setMinDate(minDate.getTimeInMillis());
+        datePicker.setMaxDate(maxDate.getTimeInMillis());
+
+        datePicker.init(minDate.get(Calendar.YEAR), minDate.get(Calendar.MONTH), minDate.get(Calendar.DAY_OF_MONTH), new DatePicker.OnDateChangedListener() {
+            @Override
+            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+            }
+        });
+    }
+
     private void makeReservation(ReservationRequest reservationRequest) {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(chain -> {
@@ -150,7 +177,8 @@ public class ReservationActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     MessageResponse messageResponse = response.body();
                     if (messageResponse != null) {
-                        Toast.makeText(ReservationActivity.this, "Reservation confirmed: " + messageResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(ReservationActivity.this, "Reservation confirmed: " + messageResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        showConfirmationDialog(messageResponse.getMessage());
                     }
                 } else {
                     Toast.makeText(ReservationActivity.this, "Failed to make reservation", Toast.LENGTH_SHORT).show();
@@ -162,5 +190,21 @@ public class ReservationActivity extends AppCompatActivity {
                 Toast.makeText(ReservationActivity.this, "Error making a reservation: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void showConfirmationDialog(String message) {
+        new AlertDialog.Builder(this)
+                .setTitle("Reservation Status")
+                .setMessage(message)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Return to AccommodationsActivity
+                        Intent intent = new Intent(ReservationActivity.this, AccommodationsActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(intent);
+                        finish();
+                    }
+                })
+                .show();
     }
 }

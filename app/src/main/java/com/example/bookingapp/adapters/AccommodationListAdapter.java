@@ -166,4 +166,10 @@ public class AccommodationListAdapter extends ArrayAdapter<AccommodationSummaryR
 
         return convertView;
     }
+
+    public void updateList(ArrayList<AccommodationSummaryResponse> newAccommodations) {
+        aAccommodations.clear();
+        aAccommodations.addAll(newAccommodations);
+        notifyDataSetChanged();
+    }
 }

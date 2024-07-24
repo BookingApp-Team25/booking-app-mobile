@@ -21,6 +21,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.util.ArrayList;
+
 public class AccommodationSearchFragment extends Fragment {
 
     private Spinner spinnerCities;
@@ -60,12 +62,28 @@ public class AccommodationSearchFragment extends Fragment {
             // Call ViewModel's search function with collected data
             viewModel.searchAccommodations(selectedCity, startDate, endDate, numberOfPeople);
 
-            AccommodationsPageFragment pageFragment = AccommodationsPageFragment.newInstance(viewModel.getAccommodations());
-            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_accommodation_search, pageFragment);
-            transaction.addToBackStack(null); // Add to back stack to allow back navigation
-            transaction.commit();
-            getParentFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+//            AccommodationsPageFragment pageFragment = AccommodationsPageFragment.newInstance();//viewModel.getAccommodations());
+//            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+//            transaction.replace(R.id.fragment_accommodation_search, pageFragment);
+//            transaction.addToBackStack(null); // Add to back stack to allow back navigation
+//            transaction.commit();
+//            getParentFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+            viewModel.getAccommodations().observe(getViewLifecycleOwner(), accommodations -> {
+                if (accommodations != null) {
+                    // Pass the updated list of accommodations to the AccommodationsPageFragment
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelableArrayList("filteredData", new ArrayList<>(accommodations));
+
+                    AccommodationsPageFragment pageFragment = AccommodationsPageFragment.newInstance(bundle);
+                    FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fragment_accommodation_search, pageFragment);
+                    transaction.addToBackStack(null); // Add to back stack to allow back navigation
+                    transaction.commit();
+
+                    //getActivity().getSupportFragmentManager().popBackStack();
+                }
+            });
         });
 
         return root;
