@@ -26,6 +26,7 @@ public class HostMainActivity extends AppCompatActivity {
     private DrawerLayout drawer;
     private androidx.appcompat.widget.Toolbar toolbar;
     private NavigationView navigationView;
+    private Butt
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +42,7 @@ public class HostMainActivity extends AppCompatActivity {
         drawer = binding.drawerLayout;
         navigationView = binding.navView;
         toolbar = binding.activityHostMain.toolbar;
+
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);

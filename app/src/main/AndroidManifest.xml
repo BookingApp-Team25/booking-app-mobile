@@ -18,6 +18,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activities.AccommodationCreationActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.HostProfileActivity"
             android:exported="false"
             android:label="@string/title_activity_host_profile"

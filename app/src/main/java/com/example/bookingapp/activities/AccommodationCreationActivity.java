@@ -9,9 +9,10 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.bookingapp.R;
+import com.example.bookingapp.databinding.ActivityAccommodationCreationBinding;
 
 public class AccommodationCreationActivity extends AppCompatActivity {
-
+    private ActivityAccommodationCreationBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,5 +23,7 @@ public class AccommodationCreationActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        binding = ActivityAccommodationCreationBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
     }
 }
