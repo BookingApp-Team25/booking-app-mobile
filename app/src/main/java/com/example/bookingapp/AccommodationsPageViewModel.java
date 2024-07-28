@@ -54,7 +54,7 @@ public class AccommodationsPageViewModel extends ViewModel {
     }
 
     public void fetchAccommodations() {
-        AccommodationService service = RetrofitClient.getClient("http://10.0.2.2:8080/api/")
+        AccommodationService service = RetrofitClient.getClient("http://192.168.1.39:8080/api/") //http://10.0.2.2:8080/api/
                 .create(AccommodationService.class);
         service.getAllAccommodations().enqueue(new Callback<Collection<AccommodationSummaryResponse>>() {
             @Override

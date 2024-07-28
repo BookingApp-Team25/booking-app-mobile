@@ -45,6 +45,7 @@
 
     <string name="filters">Filters</string>
     <string name="search">Search</string>
+    <string name="apply">Apply</string>
     <string name="category">Category</string>
     <string name="apartment">Apartment</string>
     <string name="room">Room</string>

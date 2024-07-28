@@ -139,7 +139,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.SeekBar;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -240,8 +245,43 @@ public class AccommodationsPageFragment extends Fragment {
     private void showBottomSheetDialog() {
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireActivity(), R.style.FullScreenBottomSheetDialog);
         View dialogView = getLayoutInflater().inflate(R.layout.bottom_sheet_filter, null);
+
+        // Initialize your views
+        RadioGroup radioGroupCategory = dialogView.findViewById(R.id.radioGroupCategory);
+        SeekBar seekBarPrice = dialogView.findViewById(R.id.priceSeekBar);
+        CalendarView calendarViewDate = dialogView.findViewById(R.id.calendarViewDate);
+        Button buttonApplyFilter = dialogView.findViewById(R.id.button_apply_filter);
+
+        buttonApplyFilter.setOnClickListener(v -> {
+            // Get selected category
+            int selectedCategoryId = radioGroupCategory.getCheckedRadioButtonId();
+            RadioButton selectedCategoryButton = dialogView.findViewById(selectedCategoryId);
+            String selectedCategory = selectedCategoryButton != null ? selectedCategoryButton.getText().toString() : "";
+
+            // Get price
+            int selectedPrice = seekBarPrice.getProgress();
+
+            // Get date
+            long selectedDate = calendarViewDate.getDate();
+
+            // Apply filter logic
+            applyFilter(selectedCategory, selectedPrice, selectedDate);
+
+            // Dismiss the dialog
+            bottomSheetDialog.dismiss();
+        });
+
         bottomSheetDialog.setContentView(dialogView);
         bottomSheetDialog.show();
+    }
+
+    private void applyFilter(String category, int price, long date) {
+        // Your filter logic here
+        // For example, pass the filter data to a ViewModel or another fragment/activity
+        Log.d("Filter", "Category: " + category + ", Price: " + price + ", Date: " + date);
+
+        // Update the accommodations list based on the filter
+        //accommodationsViewModel.filterAccommodations(category, price, date);
     }
 
     private void observeAccommodations() {

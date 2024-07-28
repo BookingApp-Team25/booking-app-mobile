@@ -26,7 +26,7 @@ public class AccommodationSearchViewModel extends ViewModel {
     private final AccommodationService apiService;
 
     public AccommodationSearchViewModel() {
-        apiService = RetrofitClient.getClient("http://10.0.2.2:8080/api/").create(AccommodationService.class);
+        apiService = RetrofitClient.getClient("http://192.168.1.39/api/").create(AccommodationService.class); //http://10.0.2.2:8080/api/
     }
 
     public LiveData<Collection<AccommodationSummaryResponse>> getAccommodations() {
