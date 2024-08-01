@@ -23,12 +23,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.bookingapp.network.AccommodationService;
-import com.example.bookingapp.network.RetrofitClient;
+import com.example.bookingapp.clients.AccommodationService;
+import com.example.bookingapp.clients.ClientUtils;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -54,9 +52,10 @@ public class AccommodationsPageViewModel extends ViewModel {
     }
 
     public void fetchAccommodations() {
-        AccommodationService service = RetrofitClient.getClient("http://192.168.1.39:8080/api/") //http://10.0.2.2:8080/api/
-                .create(AccommodationService.class);
-        service.getAllAccommodations().enqueue(new Callback<Collection<AccommodationSummaryResponse>>() {
+//        AccommodationService service = RetrofitClient.getClient("http://192.168.1.39:8080/api/") //http://10.0.2.2:8080/api/
+//                .create(AccommodationService.class);
+//        service.getAllAccommodations().enqueue(new Callback<Collection<AccommodationSummaryResponse>>() {
+        ClientUtils.accommodationService.getAllAccommodations().enqueue(new Callback<Collection<AccommodationSummaryResponse>>() {
             @Override
             public void onResponse(Call<Collection<AccommodationSummaryResponse>> call, Response<Collection<AccommodationSummaryResponse>> response) {
                 if (response.isSuccessful()) {

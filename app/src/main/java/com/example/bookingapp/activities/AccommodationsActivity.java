@@ -9,8 +9,6 @@ import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,11 +18,11 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.bookingapp.R;
 import com.example.bookingapp.adapters.ImagePagerAdapter;
+import com.example.bookingapp.clients.ClientUtils;
 import com.example.bookingapp.databinding.ActivityAccommodationsBinding;
 import com.example.bookingapp.dto.AccommodationDetailsResponse;
+import com.example.bookingapp.clients.AccommodationService;
 import com.example.bookingapp.entities.DatePeriod;
-import com.example.bookingapp.network.RetrofitClient;
-import com.example.bookingapp.network.AccommodationService;
 import com.google.android.material.navigation.NavigationView;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,14 +31,8 @@ import org.osmdroid.config.Configuration;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
-import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 import retrofit2.Call;
@@ -103,26 +95,58 @@ public class AccommodationsActivity extends AppCompatActivity {
         reserveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Navigate to the Reservation Activity
-                Intent intent = new Intent(AccommodationsActivity.this, ReservationActivity.class);
+                if (accommodation != null) {
+                    // Log the values being passed
+                    Log.d(TAG, "Reservation button clicked: minGuests=" + accommodation.getMinGuests() +
+                            ", maxGuests=" + accommodation.getMaxGuests() +
+                            ", availability=" + accommodation.getAvailability() +
+                            ", hostId=" + hostId +
+                            ", accommodationId=" + accommodationId);
 
-                int minGuests = accommodation.getMinGuests();
-                int maxGuests = accommodation.getMaxGuests();
+                    Intent intent = new Intent(AccommodationsActivity.this, ReservationActivity.class);
 
-                intent.putParcelableArrayListExtra("availability", (ArrayList<? extends Parcelable>) accommodation.getAvailability());
-                intent.putExtra("minGuests", minGuests);
-                intent.putExtra("maxGuests", maxGuests);
-                intent.putExtra("hostId", hostId.toString());
-                intent.putExtra("accommodationId", accommodationId.toString());
+//                    intent.putParcelableArrayListExtra("availability", (ArrayList<? extends Parcelable>) accommodation.getAvailability());
 
-                startActivity(intent);
+//                    if (accommodation.getAvailability() != null) {
+//                        for (DatePeriod avail : accommodation.getAvailability()) {
+//                            Log.d(TAG, "Availability item: " + avail.toString());
+//                        }
+//                        intent.putParcelableArrayListExtra("availability", (ArrayList<? extends Parcelable>) accommodation.getAvailability());
+//                    } else {
+//                        Log.e(TAG, "Availability is null");
+//                    }
+
+
+                    intent.putExtra("minGuests", accommodation.getMinGuests());
+                    intent.putExtra("maxGuests", accommodation.getMaxGuests());
+                    if (hostId != null) {
+                        intent.putExtra("hostId", hostId.toString());
+                    } else {
+                        Log.e(TAG, "Host ID is null");
+                    }
+                    if (accommodationId != null) {
+                        intent.putExtra("accommodationId", accommodationId.toString());
+                    } else {
+                        Log.e(TAG, "Accommodation ID is null");
+                    }
+
+                    // Start the ReservationActivity
+                    try {
+                        startActivity(intent);
+                    } catch (Error e) {
+                        Log.d(TAG, "AccommodationActivity to reservation transition error!: ");
+                    }
+
+                } else {
+                    Log.e(TAG, "Accommodation details are null");
+                }
             }
         });
     }
 
     private void fetchAccommodationDetails(UUID accommodationId) {
-        AccommodationService apiService = RetrofitClient.getClient("http://10.0.2.2:8080/api/").create(AccommodationService.class);
-        Call<AccommodationDetailsResponse> call = apiService.getAccommodation(accommodationId);
+//        AccommodationService apiService = RetrofitClient.getClient("http://10.0.2.2:8080/api/").create(AccommodationService.class);
+        Call<AccommodationDetailsResponse> call = ClientUtils.accommodationService.getAccommodation(accommodationId); //apiService.getAccommodation(accommodationId);
 
         call.enqueue(new Callback<AccommodationDetailsResponse>() {
             @Override

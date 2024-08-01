@@ -6,9 +6,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.bookingapp.clients.ClientUtils;
 import com.example.bookingapp.dto.AccommodationSummaryResponse;
-import com.example.bookingapp.network.AccommodationService;
-import com.example.bookingapp.network.RetrofitClient;
+import com.example.bookingapp.clients.AccommodationService;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -23,10 +23,10 @@ import retrofit2.Response;
 public class AccommodationSearchViewModel extends ViewModel {
 
     private final MutableLiveData<Collection<AccommodationSummaryResponse>> accommodationsLiveData = new MutableLiveData<>();
-    private final AccommodationService apiService;
+    //private final AccommodationService apiService;
 
     public AccommodationSearchViewModel() {
-        apiService = RetrofitClient.getClient("http://192.168.1.39/api/").create(AccommodationService.class); //http://10.0.2.2:8080/api/
+      //  apiService = RetrofitClient.getClient("http://192.168.1.39/api/").create(AccommodationService.class); //http://10.0.2.2:8080/api/
     }
 
     public LiveData<Collection<AccommodationSummaryResponse>> getAccommodations() {
@@ -55,7 +55,7 @@ public class AccommodationSearchViewModel extends ViewModel {
             return; // Exit if there is a date parsing error
         }
 
-        Call<Collection<AccommodationSummaryResponse>> call = apiService.searchAccommodations(city, formattedStartDate, formattedEndDate, numberOfPeople);
+        Call<Collection<AccommodationSummaryResponse>> call = ClientUtils.accommodationService.searchAccommodations(city, formattedStartDate, formattedEndDate, numberOfPeople); //apiService.searchAccommodations(city, formattedStartDate, formattedEndDate, numberOfPeople);
         call.enqueue(new Callback<Collection<AccommodationSummaryResponse>>() {
             @Override
             public void onResponse(Call<Collection<AccommodationSummaryResponse>> call, Response<Collection<AccommodationSummaryResponse>> response) {
