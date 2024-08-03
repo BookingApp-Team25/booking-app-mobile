@@ -140,10 +140,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -154,6 +157,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.bookingapp.R;
 import com.example.bookingapp.activities.AccommodationsActivity;
+import com.example.bookingapp.activities.GuestMainActivity;
+import com.example.bookingapp.activities.ReservationActivity;
 import com.example.bookingapp.adapters.AccommodationListAdapter;
 import com.example.bookingapp.dto.AccommodationSummaryResponse;
 import com.example.bookingapp.AccommodationsPageViewModel;
@@ -189,6 +194,9 @@ public class AccommodationsPageFragment extends Fragment {
 
         Button btnFilters = root.findViewById(R.id.btnFilters);
         btnFilters.setOnClickListener(v -> showBottomSheetDialog());
+
+        Button btnReset = root.findViewById(R.id.btnReset);
+        btnReset.setOnClickListener(v -> resetView());
 
         setupListView(root);
 
@@ -247,25 +255,37 @@ public class AccommodationsPageFragment extends Fragment {
         View dialogView = getLayoutInflater().inflate(R.layout.bottom_sheet_filter, null);
 
         // Initialize your views
-        RadioGroup radioGroupCategory = dialogView.findViewById(R.id.radioGroupCategory);
-        SeekBar seekBarPrice = dialogView.findViewById(R.id.priceSeekBar);
-        CalendarView calendarViewDate = dialogView.findViewById(R.id.calendarViewDate);
+        CheckBox checkBoxFreeWifi = dialogView.findViewById(R.id.checkBoxFreeWifi);
+        CheckBox checkBoxAirConditioner = dialogView.findViewById(R.id.checkBoxAirConditioner);
+        CheckBox checkBoxSwimmingPool = dialogView.findViewById(R.id.checkBoxSwimmingPool);
+        CheckBox checkBoxKitchen = dialogView.findViewById(R.id.checkBoxKitchen);
+
+        CheckBox checkBoxStudio = dialogView.findViewById(R.id.checkBoxStudio);
+        CheckBox checkBoxRoom = dialogView.findViewById(R.id.checkBoxRoom);
+        CheckBox checkBoxApartment = dialogView.findViewById(R.id.checkBoxApartment);
+        CheckBox checkBoxHouse = dialogView.findViewById(R.id.checkBoxHouse);
+
+        EditText editTextMinPrice = dialogView.findViewById(R.id.editTextMinPrice);
+        EditText editTextMaxPrice = dialogView.findViewById(R.id.editTextMaxPrice);
+
         Button buttonApplyFilter = dialogView.findViewById(R.id.button_apply_filter);
-
         buttonApplyFilter.setOnClickListener(v -> {
-            // Get selected category
-            int selectedCategoryId = radioGroupCategory.getCheckedRadioButtonId();
-            RadioButton selectedCategoryButton = dialogView.findViewById(selectedCategoryId);
-            String selectedCategory = selectedCategoryButton != null ? selectedCategoryButton.getText().toString() : "";
+            // Get selected filters
+            boolean freeWifi = checkBoxFreeWifi.isChecked();
+            boolean airConditioner = checkBoxAirConditioner.isChecked();
+            boolean swimmingPool = checkBoxSwimmingPool.isChecked();
+            boolean kitchen = checkBoxKitchen.isChecked();
 
-            // Get price
-            int selectedPrice = seekBarPrice.getProgress();
+            boolean studio = checkBoxStudio.isChecked();
+            boolean room = checkBoxRoom.isChecked();
+            boolean apartment = checkBoxApartment.isChecked();
+            boolean house = checkBoxHouse.isChecked();
 
-            // Get date
-            long selectedDate = calendarViewDate.getDate();
+            String minPrice = editTextMinPrice.getText().toString();
+            String maxPrice = editTextMaxPrice.getText().toString();
 
             // Apply filter logic
-            applyFilter(selectedCategory, selectedPrice, selectedDate);
+            applyFilter(freeWifi, airConditioner, swimmingPool, kitchen, studio, room, apartment, house, minPrice, maxPrice);
 
             // Dismiss the dialog
             bottomSheetDialog.dismiss();
@@ -275,13 +295,21 @@ public class AccommodationsPageFragment extends Fragment {
         bottomSheetDialog.show();
     }
 
-    private void applyFilter(String category, int price, long date) {
+    private void applyFilter(boolean freeWifi, boolean airConditioner, boolean swimmingPool, boolean kitchen, boolean studio, boolean room, boolean apartment, boolean house, String minPrice, String maxPrice) {
         // Your filter logic here
-        // For example, pass the filter data to a ViewModel or another fragment/activity
-        Log.d("Filter", "Category: " + category + ", Price: " + price + ", Date: " + date);
+        Log.d("Filter", "Free wifi: " + freeWifi + ", Air conditioner: " + airConditioner + ", Swimming pool: " + swimmingPool + ", Kitchen: " + kitchen);
+        Log.d("Filter", "Studio: " + studio + ", Room: " + room + ", Apartment: " + apartment + ", House: " + house);
+        Log.d("Filter", "Min price: " + minPrice + ", Max price: " + maxPrice);
 
         // Update the accommodations list based on the filter
-        //accommodationsViewModel.filterAccommodations(category, price, date);
+        accommodationsViewModel.filterAccommodations(freeWifi, airConditioner, swimmingPool, kitchen, studio, room, apartment, house, minPrice, maxPrice);
+        Toast.makeText(getContext(), "Filters applied", Toast.LENGTH_SHORT).show();
+    }
+
+    public void resetView() {
+        Log.d("PageFragment", "resetView: Reseting the view.");
+        accommodationsViewModel.fetchAccommodations();
+        observeAccommodations();
     }
 
     private void observeAccommodations() {

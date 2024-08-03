@@ -18,11 +18,13 @@
 package com.example.bookingapp;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.bookingapp.activities.ReservationActivity;
 import com.example.bookingapp.clients.AccommodationService;
 import com.example.bookingapp.clients.ClientUtils;
 
@@ -62,7 +64,6 @@ public class AccommodationsPageViewModel extends ViewModel {
                     Collection<AccommodationSummaryResponse> receivedAccommodations = response.body();
                     accommodations.setValue(receivedAccommodations);
 
-                    // Log the received accommodations
                     for (AccommodationSummaryResponse accommodation : receivedAccommodations) {
                         Log.d("AccommodationsPageViewModel", "Received accommodation: " + accommodation);
                     }
@@ -71,9 +72,12 @@ public class AccommodationsPageViewModel extends ViewModel {
 
             @Override
             public void onFailure(Call<Collection<AccommodationSummaryResponse>> call, Throwable t) {
-                // Handle the error
                 Log.e("AccommodationsPageViewModel", "Failed to fetch accommodations: " + t.getMessage());
             }
         });
+    }
+
+    public void filterAccommodations(boolean wifi, boolean airConditioner, boolean pool, boolean kitchen, boolean studio, boolean room, boolean apartment, boolean house, String minPrice, String maxPrice) {
+
     }
 }

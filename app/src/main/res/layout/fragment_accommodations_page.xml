@@ -40,6 +40,14 @@
                 android:layout_weight="0.7"
                 android:text="@string/filters"
                 tools:ignore="TextContrastCheck" />
+
+            <Button
+                android:id="@+id/btnReset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7"
+                android:text="@string/reset"
+                tools:ignore="TextContrastCheck" />
         </LinearLayout>
 
         <RelativeLayout
