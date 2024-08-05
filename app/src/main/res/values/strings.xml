@@ -45,6 +45,8 @@
 
     <string name="filters">Filters</string>
     <string name="reset">Reset</string>
+    <string name="delete">Delete</string>
+    <string name="your_reservations">Your reservations</string>
     <string name="search">Search</string>
     <string name="apply">Apply</string>
     <string name="category">Category</string>
