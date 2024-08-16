@@ -3,6 +3,7 @@
     <style name="Base.Theme.BookingApp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
     </style>
 
     <style name="Theme.BookingApp" parent="Base.Theme.BookingApp">
@@ -16,6 +17,9 @@
         <item name="colorOnSecondary">@color/white</item>
         <item name="drawerArrowStyle">@color/black</item>
     </style>
+
+
+
 
     <style name="Theme.BookingApp.NoActionBar">
         <item name="windowActionBar">false</item>

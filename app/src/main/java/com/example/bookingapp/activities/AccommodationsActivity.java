@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,11 +23,13 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.bookingapp.R;
 import com.example.bookingapp.adapters.ImagePagerAdapter;
+import com.example.bookingapp.adapters.NotificationHelper;
 import com.example.bookingapp.adapters.ReviewListAdapter;
 import com.example.bookingapp.clients.ClientUtils;
 import com.example.bookingapp.databinding.ActivityAccommodationsBinding;
 import com.example.bookingapp.dto.AccommodationDetailsResponse;
 import com.example.bookingapp.dto.MessageResponse;
+import com.example.bookingapp.dto.NotificationRequest;
 import com.example.bookingapp.dto.ReviewRequest;
 import com.example.bookingapp.dto.ReviewResponse;
 import com.example.bookingapp.dto.enums.ReviewType;
@@ -41,6 +44,7 @@ import android.widget.Toast;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -49,7 +53,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import android.view.View;
-public class AccommodationsActivity extends AppCompatActivity implements ReviewListAdapter.ReviewDeleteListener,ReviewListAdapter.ReviewReportListener {
+public class AccommodationsActivity extends AppCompatActivity implements ReviewListAdapter.ReviewDeleteListener,ReviewListAdapter.ReviewReportListener , NavigationView.OnNavigationItemSelectedListener{
 
     private static final String TAG = "AccommodationsActivity";
     private ListView listViewReviews;
@@ -86,6 +90,15 @@ public class AccommodationsActivity extends AppCompatActivity implements ReviewL
         reviewRating.setRating(1);
         reviewText = findViewById(R.id.review_text);
         sendButton = findViewById(R.id.send_review);
+        ownerText = findViewById(R.id.owner);
+        ownerText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AccommodationsActivity.this, ActivityHostProfile.class);
+                intent.putExtra("hostUsername",ownerText.getText());
+                startActivity(intent);
+            }
+        });
 
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(false);
@@ -93,6 +106,7 @@ public class AccommodationsActivity extends AppCompatActivity implements ReviewL
         }
         drawer = binding.drawerLayout.drawerLayout;
         navigationView = binding.drawerLayout.navView;
+        navigationView.setNavigationItemSelectedListener(this);
         toolbar = binding.drawerLayout.activityGuestMainNoContent.toolbar;
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(
@@ -107,7 +121,6 @@ public class AccommodationsActivity extends AppCompatActivity implements ReviewL
             accommodationId = (UUID) intent.getSerializableExtra("accommodationId");
             Log.d(TAG, "Accommodation ID: " + accommodationId);
             fetchAccommodationDetails(accommodationId);
-            ownerText.setText("Owner: "+accommodation.getHostUsername());
         } else {
             Log.d(TAG, "No accommodationId found in the intent.");
         }
@@ -167,6 +180,8 @@ public class AccommodationsActivity extends AppCompatActivity implements ReviewL
 
                     }
                 });
+                NotificationRequest notificationRequest = new NotificationRequest(accommodation.getHostUsername(),"New accommodation review,Korisnik " + UserInfo.getUsername() + " je komentarisao vas smestaj", LocalDateTime.now(),false);
+                NotificationHelper.createAndSaveNotification(AccommodationsActivity.this,notificationRequest);
             }
         });
     }
@@ -185,6 +200,7 @@ public class AccommodationsActivity extends AppCompatActivity implements ReviewL
                     hostId = (UUID) response.body().getHostId();
                     populateUI(accommodation);
                     fetchReviews(accommodationId);
+                    ownerText.setText("Owner: "+accommodation.getHostUsername());
                 } else {
                     Log.d(TAG, "Response received but not successful: " + response.message());
                 }
@@ -261,11 +277,7 @@ public class AccommodationsActivity extends AppCompatActivity implements ReviewL
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.itemAccount) {
-            Intent intent = new Intent(this, AccountActivity.class);
-            startActivity(intent);
-            return true;
-        } else if (itemId == R.id.itemNotificationsView) {
+        if (itemId == R.id.itemNotificationsView) {
             Intent intent = new Intent(this, NotificationsActivity.class);
             startActivity(intent);
             return true;
@@ -277,7 +289,6 @@ public class AccommodationsActivity extends AppCompatActivity implements ReviewL
             return super.onOptionsItemSelected(item);
         }
     }
-
     @Override
     public void onDeleteReview(ReviewResponse review) {
         ClientUtils.reviewService.deleteReview(review.getId().toString(), true, UserInfo.getToken()).enqueue(new Callback<Boolean>() {
@@ -348,5 +359,10 @@ public class AccommodationsActivity extends AppCompatActivity implements ReviewL
                 Log.e(TAG, "Failed to report review: " + t.getMessage());
             }
         });
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return false;
     }
 }

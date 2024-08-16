@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import com.example.bookingapp.dto.enums.AccommodationOnHoldStatus;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 public class AccommodationSummaryResponse implements Parcelable {
@@ -14,12 +15,13 @@ public class AccommodationSummaryResponse implements Parcelable {
     private String description;
     private double price;
     private double rating;
+    LocalDate earliestAvailableDate;
     private AccommodationOnHoldStatus onHoldStatus;
 
     public AccommodationSummaryResponse() {
     }
 
-    public AccommodationSummaryResponse(UUID accommodationId, String name, String photo, String description, double price, double rating, AccommodationOnHoldStatus onHoldStatus) {
+    public AccommodationSummaryResponse(UUID accommodationId, String name, String photo, String description, double price, double rating, AccommodationOnHoldStatus onHoldStatus, LocalDate earliestAvailableDate) {
         this.accommodationId = accommodationId;
         this.name = name;
         this.photo = photo;
@@ -27,6 +29,7 @@ public class AccommodationSummaryResponse implements Parcelable {
         this.price = price;
         this.rating = rating;
         this.onHoldStatus = onHoldStatus;
+        this.earliestAvailableDate = earliestAvailableDate;
     }
 
     protected AccommodationSummaryResponse(Parcel in) {
@@ -124,5 +127,13 @@ public class AccommodationSummaryResponse implements Parcelable {
 
     public void setOnHoldStatus(AccommodationOnHoldStatus onHoldStatus) {
         this.onHoldStatus = onHoldStatus;
+    }
+
+    public LocalDate getEarliestAvailableDate() {
+        return earliestAvailableDate;
+    }
+
+    public void setEarliestAvailableDate(LocalDate earliestAvailableDate) {
+        this.earliestAvailableDate = earliestAvailableDate;
     }
 }

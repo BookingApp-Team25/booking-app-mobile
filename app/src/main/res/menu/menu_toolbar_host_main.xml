@@ -7,26 +7,23 @@
         android:icon="@drawable/baseline_home_24"
         android:title="@string/host_iconHome"
         app:showAsAction="always" />
-
     <item
-        android:id="@+id/itemAccount"
-        android:icon="@drawable/baseline_account_circle_24"
-        android:title="@string/host_itemAccount"
-        app:showAsAction="always" />
-
+        android:id="@+id/itemCreateAccommodation"
+        android:title="Create accommodation"
+        app:showAsAction="never" />
     <item
-        android:id="@+id/itemReservationView"
-        android:title="@string/host_itemReservationView"
+        android:id="@+id/viewProfile"
+        android:title="View your profile"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/viewReservations"
+        android:title="View reservations"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/viewNotifications"
+        android:title="View notifications"
         app:showAsAction="never" />
 
-    <item
-        android:id="@+id/itemAccomodationView"
-        android:title="@string/host_itemAccomodationView"
-        app:showAsAction="never" />
 
-    <item
-        android:id="@+id/itemNotificationsView"
-        android:title="@string/host_itemNotificationsView"
-        app:showAsAction="never" />
 
 </menu>
