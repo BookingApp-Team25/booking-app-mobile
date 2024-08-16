@@ -11,17 +11,17 @@
         android:theme="@style/Theme.BookingApp.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbarHost"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme" />
+            android:theme="@style/Theme.BookingApp" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <include
-
+        android:id="@+id/activity_host_main_content"
         layout="@layout/activity_host_main_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

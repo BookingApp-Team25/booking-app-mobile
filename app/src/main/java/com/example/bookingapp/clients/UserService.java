@@ -26,5 +26,7 @@ public interface UserService {
 
     @DELETE("user/{username}")
     Call<MessageResponse> deleteAccount(@Path("username") String username,@Header("Authorization") String authorizationHeader);
+    @GET("user/host-details/{hostId}")
+    Call<AccountDetailsResponse> getHostDetails(@Path("hostId") String hostId,@Header("Authorization") String authorizationHeader);
 
 }

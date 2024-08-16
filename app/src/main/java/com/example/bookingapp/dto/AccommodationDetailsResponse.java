@@ -3,6 +3,7 @@ package com.example.bookingapp.dto;
 import com.example.bookingapp.dto.enums.AccommodationOnHoldStatus;
 import com.example.bookingapp.dto.enums.AccommodationReservationPolicy;
 import com.example.bookingapp.dto.enums.AccommodationType;
+import com.example.bookingapp.entities.AccommodationPricelist;
 import com.example.bookingapp.entities.DatePeriod;
 import com.example.bookingapp.entities.Location;
 
@@ -20,7 +21,7 @@ public class AccommodationDetailsResponse {
     private int maxGuests;
     private AccommodationType type;
     private List<DatePeriod> availability;
-    //private AccommodationPricelist pricelist;
+    private AccommodationPricelist pricelist;
     private double price;
     private int daysBefore;
     private AccommodationReservationPolicy policy;
@@ -30,8 +31,15 @@ public class AccommodationDetailsResponse {
     private double rating;
     public AccommodationDetailsResponse() {
     }
+    public AccommodationPricelist getPricelist() {
+        return pricelist;
+    }
 
-    public AccommodationDetailsResponse(UUID id,String name, String description, Location location, List<String> amenities, List<String> photos, int minGuests, int maxGuests, AccommodationType type, List<DatePeriod> availability, /*AccommodationPricelist pricelist,*/ double price, int daysBefore, AccommodationReservationPolicy policy, AccommodationOnHoldStatus status, UUID hostId, String hostUsername, double rating) {
+    public void setPricelist(AccommodationPricelist pricelist) {
+        this.pricelist = pricelist;
+    }
+
+    public AccommodationDetailsResponse(UUID id,String name, String description, Location location, List<String> amenities, List<String> photos, int minGuests, int maxGuests, AccommodationType type, List<DatePeriod> availability, AccommodationPricelist pricelist, double price, int daysBefore, AccommodationReservationPolicy policy, AccommodationOnHoldStatus status, UUID hostId, String hostUsername, double rating) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -42,7 +50,7 @@ public class AccommodationDetailsResponse {
         this.maxGuests = maxGuests;
         this.type = type;
         this.availability = availability;
-        //this.pricelist = pricelist;
+        this.pricelist = pricelist;
         this.price = price;
         this.daysBefore = daysBefore;
         this.policy = policy;
@@ -63,7 +71,7 @@ public class AccommodationDetailsResponse {
         this.maxGuests = accommdation.maxGuests;
         this.type = accommdation.type;
         this.availability = accommdation.availability;
-        //this.pricelist = pricelist;
+        this.pricelist = accommdation.pricelist;
         this.price = accommdation.price;
         this.daysBefore = accommdation.daysBefore;
         this.policy = accommdation.policy;

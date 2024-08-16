@@ -6,8 +6,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.bookingapp.clients.ClientUtils;
 import com.example.bookingapp.dto.AccommodationSummaryResponse;
-import com.example.bookingapp.network.AccommodationService;
+import com.example.bookingapp.clients.AccommodationService;
 import com.example.bookingapp.network.RetrofitClient;
 
 import java.util.Collection;
@@ -22,7 +23,7 @@ public class AccommodationSearchViewModel extends ViewModel {
     private final AccommodationService apiService;
 
     public AccommodationSearchViewModel() {
-        apiService = RetrofitClient.getClient("http://10.0.2.2:8080/api/").create(AccommodationService.class);
+        apiService = ClientUtils.accommodationService;
     }
 
     public LiveData<Collection<AccommodationSummaryResponse>> getAccommodations() {
