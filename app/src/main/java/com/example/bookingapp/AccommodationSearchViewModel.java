@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.bookingapp.clients.ClientUtils;
 import com.example.bookingapp.dto.AccommodationSummaryResponse;
 import com.example.bookingapp.clients.AccommodationService;
+import com.example.bookingapp.clients.AccommodationService;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -82,6 +83,7 @@ public class AccommodationSearchViewModel extends ViewModel {
 
             @Override
             public void onFailure(Call<Collection<AccommodationSummaryResponse>> call, Throwable t) {
+                // Handle network errors
                 Log.e("AccommodationsSearchViewModel", "Failed to fetch accommodations: " + t.getMessage());
             }
         });

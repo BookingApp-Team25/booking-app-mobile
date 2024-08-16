@@ -29,6 +29,8 @@ import com.example.bookingapp.clients.AccommodationService;
 import com.example.bookingapp.clients.ClientUtils;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -64,6 +66,7 @@ public class AccommodationsPageViewModel extends ViewModel {
                     Collection<AccommodationSummaryResponse> receivedAccommodations = response.body();
                     accommodations.setValue(receivedAccommodations);
 
+                    // Log the received accommodations
                     for (AccommodationSummaryResponse accommodation : receivedAccommodations) {
                         Log.d("AccommodationsPageViewModel", "Received accommodation: " + accommodation);
                     }

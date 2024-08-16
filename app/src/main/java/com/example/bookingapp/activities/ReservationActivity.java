@@ -1,7 +1,5 @@
 package com.example.bookingapp.activities;
 
-import static com.example.bookingapp.security.UserInfo.getToken;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,21 +14,19 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bookingapp.R;
+import com.example.bookingapp.adapters.NotificationHelper;
+import com.example.bookingapp.clients.ClientUtils;
+import com.example.bookingapp.dto.AccountDetailsResponse;
 import com.example.bookingapp.clients.ClientUtils;
 import com.example.bookingapp.dto.MessageResponse;
+import com.example.bookingapp.dto.NotificationRequest;
 import com.example.bookingapp.dto.ReservationRequest;
 import com.example.bookingapp.dto.enums.ReservationStatus;
 import com.example.bookingapp.entities.DatePeriod;
 import com.example.bookingapp.clients.ReservationService;
 import com.example.bookingapp.security.UserInfo;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializer;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.UUID;
@@ -214,6 +210,7 @@ public class ReservationActivity extends AppCompatActivity {
     private DatePicker datePickerStart;
     private DatePicker datePickerEnd;
     private Button confirmReservationButton;
+    private String hostUsername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -234,6 +231,8 @@ public class ReservationActivity extends AppCompatActivity {
             int maxGuests = intent.getIntExtra("maxGuests", 0);
             String hostId = intent.getStringExtra("hostId");
             String accommodationId = intent.getStringExtra("accommodationId");
+
+            // also add date stting
 
             numberPicker.setMinValue(minGuests);
             numberPicker.setMaxValue(maxGuests);
@@ -329,18 +328,39 @@ public class ReservationActivity extends AppCompatActivity {
 //                .addConverterFactory(GsonConverterFactory.create(gson))
 //                .client(httpClient.build())
 //                .build();
+        ReservationService apiService = ClientUtils.reservationService;
+        Call<AccountDetailsResponse> callHost = ClientUtils.userService.getHostDetails(reservationRequest.getHostId().toString(),UserInfo.getToken());
+        callHost.enqueue(new Callback<AccountDetailsResponse>() {
+            @Override
+            public void onResponse(Call<AccountDetailsResponse> call, Response<AccountDetailsResponse> response) {
+                if(response.code() == 200){
+                    hostUsername = response.body().getUsername();
+                }
+                else{
+                    Toast.makeText(ReservationActivity.this, "Server failed to get host username", Toast.LENGTH_SHORT).show();
+                }
+            }
 
 
 //        ReservationService apiService = retrofit.create(ReservationService.class);
-        Call<MessageResponse> call = ClientUtils.reservationService.createReservation(reservationRequest, UserInfo.getToken()); //apiService.createReservation(reservationRequest);
-        Log.d("ReservationRequest", reservationRequest.toString());
+        //Call<MessageResponse> call = ClientUtils.reservationService.createReservation(reservationRequest, UserInfo.getToken()); //apiService.createReservation(reservationRequest);
+        //Log.d("ReservationRequest", reservationRequest.toString());
 
+            @Override
+            public void onFailure(Call<AccountDetailsResponse> call, Throwable t) {
+                Toast.makeText(ReservationActivity.this, "Failed to get host username", Toast.LENGTH_SHORT).show();
+            }
+        });
+        Call<MessageResponse> call = apiService.createReservation(reservationRequest, UserInfo.getToken());
         call.enqueue(new Callback<MessageResponse>() {
             @Override
             public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
                 if (response.isSuccessful()) {
                     MessageResponse messageResponse = response.body();
                     if (messageResponse != null) {
+                        Toast.makeText(ReservationActivity.this, "Reservation confirmed: " + messageResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        NotificationRequest notificationRequest = new NotificationRequest(hostUsername,"New reservation,Korisnik " + UserInfo.getUsername() + " je poslao zahtev za rezervaciju", LocalDateTime.now(),false);
+                        NotificationHelper.createAndSaveNotification(ReservationActivity.this,notificationRequest);
                         //Toast.makeText(ReservationActivity.this, "Reservation confirmed: " + messageResponse.getMessage(), Toast.LENGTH_SHORT).show();
                         showConfirmationDialog(messageResponse.getMessage());
                     }

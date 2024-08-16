@@ -70,12 +70,7 @@ public class GuestMainActivity extends AppCompatActivity implements NavigationVi
     }
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.itemAccount) {
-            Intent intent = new Intent(this, AccountActivity.class);
-            startActivity(intent);
-            return true;
-        }
-        else if(itemId == R.id.itemNotificationsView){
+        if(itemId == R.id.itemNotificationsView){
             Intent intent = new Intent(this,  NotificationsActivity.class);
             startActivity(intent);
             return true;

@@ -5,9 +5,10 @@ import android.os.Parcelable;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Objects;
 import java.util.UUID;
 
-public class DatePeriod {
+public class DatePeriod implements Parcelable {
     UUID id;
     private LocalDate startDate;
     private LocalDate endDate;
@@ -17,6 +18,47 @@ public class DatePeriod {
     public DatePeriod(LocalDate startDate, LocalDate endDate) {
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+    protected DatePeriod(Parcel in) {
+        String idString = in.readString();
+        if(Objects.equals(idString, "")){
+            id = UUID.randomUUID();
+        }
+        else{
+            id = UUID.fromString(in.readString());
+        }
+        startDate = (LocalDate) in.readSerializable();
+        endDate = (LocalDate) in.readSerializable();
+    }
+
+    public static final Creator<DatePeriod> CREATOR = new Creator<DatePeriod>() {
+        @Override
+        public DatePeriod createFromParcel(Parcel in) {
+            return new DatePeriod(in);
+        }
+
+        @Override
+        public DatePeriod[] newArray(int size) {
+            return new DatePeriod[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if(id == null){
+            dest.writeString("");
+        }
+        else{
+            dest.writeString(id.toString());
+        }
+        dest.writeSerializable(startDate);
+        dest.writeSerializable(endDate);
     }
 
     // Getters and Setters
