@@ -3,6 +3,10 @@ package com.example.bookingapp.clients;
 import com.example.bookingapp.dto.AccountDetailsResponse;
 import com.example.bookingapp.dto.AccountEditRequest;
 import com.example.bookingapp.dto.MessageResponse;
+import com.example.bookingapp.dto.UserReportResponse;
+
+import java.util.Collection;
+import java.util.UUID;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -11,6 +15,7 @@ import retrofit2.http.GET;
 import retrofit2.http.PUT;
 import retrofit2.http.Header;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface UserService {
 
@@ -28,5 +33,11 @@ public interface UserService {
     Call<MessageResponse> deleteAccount(@Path("username") String username,@Header("Authorization") String authorizationHeader);
     @GET("user/host-details/{hostId}")
     Call<AccountDetailsResponse> getHostDetails(@Path("hostId") String hostId,@Header("Authorization") String authorizationHeader);
+    @PUT("user/report/{username}")
+    Call<MessageResponse> report(@Path("username") String username, @Query("reason") String reason,@Header("Authorization") String authorizationHeader);
+    @GET("user/reported")
+    Call<Collection<UserReportResponse>> getAllReportedUsers(@Header("Authorization") String authorizationHeader);
+    @PUT("user/blockUser/{userId}")
+    Call<Boolean> blockUser(@Path("userId")String userId,@Header("Authorization") String authorizationHeader);
 
 }

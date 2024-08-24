@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
+    <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
 
     <application
         android:name=".activities.MyApp"
@@ -22,6 +24,15 @@
         android:theme="@style/Theme.BookingApp"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".activities.AdministratorReportedUsersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.AnualLogActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.HostLogsActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.HostReservationsActivity"
             android:exported="false" />
@@ -65,18 +76,15 @@
         <activity
             android:name=".activities.AccommodationsActivity"
             android:exported="false"
-            android:label="@string/title_activity_accommodations"
-            android:theme="@style/Theme.ShopApp" />
+            android:label="@string/title_activity_accommodations"/>
         <activity
             android:name=".activities.GuestMainActivity"
             android:exported="false"
-            android:label="@string/title_activity_guest_main"
-            android:theme="@style/Theme.ShopApp" />
+            android:label="@string/title_activity_guest_main"/>
         <activity
             android:name=".activities.RegistrationActivity"
             android:exported="false"
-            android:label="@string/title_activity_registration"
-            android:theme="@style/Theme.ShopApp" />
+            android:label="@string/title_activity_registration"/>
         <activity
             android:name=".activities.AccountActivity"
             android:exported="false" />

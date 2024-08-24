@@ -28,6 +28,7 @@ import com.example.bookingapp.dto.enums.PriceCalculationMethod;
 import com.example.bookingapp.entities.AccommodationPricelist;
 import com.example.bookingapp.entities.DatePeriod;
 import com.example.bookingapp.entities.ReservationDatePeriod;
+import com.example.bookingapp.security.UserInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,7 +116,7 @@ public class AccommodationCreationActivity extends AppCompatActivity {
             Toast.makeText(AccommodationCreationActivity.this, "EDITING", Toast.LENGTH_SHORT).show();
             String accommodationId = intent.getStringExtra("accommodationId");
             accommodationUUID = UUID.fromString(accommodationId);
-            Call<AccommodationDetailsResponse> call = ClientUtils.accommodationService.getAccommodation(UUID.fromString(accommodationId));
+            Call<AccommodationDetailsResponse> call = ClientUtils.accommodationService.getAccommodation(UUID.fromString(accommodationId), UserInfo.getToken());
 
             call.enqueue(new Callback<AccommodationDetailsResponse>() {
                 @Override

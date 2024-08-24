@@ -57,4 +57,5 @@ dependencies {
     implementation ("androidx.viewpager2:viewpager2:1.0.0")
     implementation ("com.google.android.material:material:1.3.0")
     implementation ("org.osmdroid:osmdroid-android:6.1.11")
+    implementation ("androidx.biometric:biometric:1.1.0")
 }

@@ -14,6 +14,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -26,4 +27,6 @@ public interface ReservationService {
     Call<HostReservationCollectionResponse> getUnresolvedHostReservations(@Path("hostId") UUID hostId,@Query("page") @Nullable int page, @Query("numberOfElements") @Nullable int numberOfElements,@Header("Authorization") String authorizationHeader);
     @POST("reservation/{reservationId}/resolve")
     Call<MessageResponse> resolveReservationRequest(@Path("reservationId") UUID reservationId, @Query("isAccepted") boolean isAccepted, @Header("Authorization") String authorizationHeader);
+    @PUT("reservation/cancel/{reservationId}")
+    Call<Boolean> cancelReservation(@Path("reservationId") String reservationId,@Header("Authorization") String authorizationHeader);
 }

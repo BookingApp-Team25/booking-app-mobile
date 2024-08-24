@@ -138,6 +138,10 @@ public class AccommodationsActivity extends AppCompatActivity implements ReviewL
 
         // Pressing the button triggers the ReservationActivity
         Button reserveButton = findViewById(R.id.make_reserbation_button);
+        if(UserInfo.getRole().equals("ROLE_Host"))
+        {
+            reserveButton.setVisibility(View.GONE);
+        }
         reserveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -189,7 +193,7 @@ public class AccommodationsActivity extends AppCompatActivity implements ReviewL
 
     private void fetchAccommodationDetails(UUID accommodationId) {
         AccommodationService apiService = ClientUtils.accommodationService;
-        Call<AccommodationDetailsResponse> call = apiService.getAccommodation(accommodationId);
+        Call<AccommodationDetailsResponse> call = apiService.getAccommodation(accommodationId,UserInfo.getToken());
 
         call.enqueue(new Callback<AccommodationDetailsResponse>() {
             @Override

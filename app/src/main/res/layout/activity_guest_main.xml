@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.HostMainActivity">
+    tools:context=".activities.GuestMainActivity">
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
@@ -12,18 +12,17 @@
         android:theme="@style/Theme.BookingApp.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbarGuest"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
+            android:background="@color/white"
             android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme"
-            app:layout_anchor="@+id/toolbar2"
-            app:layout_anchorGravity="center" />
+            android:theme="@style/Theme.BookingApp" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <include
+        android:id="@+id/activity_guest_main_content"
         layout="@layout/activity_guest_main_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

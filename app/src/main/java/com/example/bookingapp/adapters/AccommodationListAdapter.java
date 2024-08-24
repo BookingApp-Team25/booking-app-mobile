@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,8 +22,11 @@ import com.example.bookingapp.Accommodation;
 import com.example.bookingapp.R;
 import com.example.bookingapp.activities.AccommodationsActivity;
 import com.example.bookingapp.dto.AccommodationSummaryResponse;
+import com.example.bookingapp.security.UserInfo;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /*
  * Adapteri unutar Android-a sluze da prikazu unapred nedefinisanu kolicinu podataka
@@ -118,10 +122,14 @@ import java.util.ArrayList;
 //}
 public class AccommodationListAdapter extends ArrayAdapter<AccommodationSummaryResponse> {
     private ArrayList<AccommodationSummaryResponse> aAccommodations;
+    private AddFavouriteListener addFavouriteListener;
+    private AccommodationDetailsListener accommodationDetailsListener;
 
-    public AccommodationListAdapter(Context context, ArrayList<AccommodationSummaryResponse> accommodations) {
+    public AccommodationListAdapter(Context context, ArrayList<AccommodationSummaryResponse> accommodations, AddFavouriteListener addFavouriteListener, AccommodationDetailsListener accommodationDetailsListener) {
         super(context, R.layout.accommodation_card, accommodations);
         aAccommodations = accommodations;
+        this.addFavouriteListener = addFavouriteListener;
+        this.accommodationDetailsListener = accommodationDetailsListener;
     }
 
     @NonNull
@@ -137,6 +145,8 @@ public class AccommodationListAdapter extends ArrayAdapter<AccommodationSummaryR
         TextView productDescription = convertView.findViewById(R.id.product_description);
         TextView accommodationPrice = convertView.findViewById(R.id.accommodation_price);
         TextView accommodationRating = convertView.findViewById(R.id.accommodation_rating);
+        FloatingActionButton addFavouriteButton = convertView.findViewById(R.id.accommodationAddToFavouriteFloatingButton);
+
 
         if (accommodation != null) {
             String photoUrl = accommodation.getPhoto(); // Replace this with your actual URL string
@@ -144,26 +154,34 @@ public class AccommodationListAdapter extends ArrayAdapter<AccommodationSummaryR
             Glide.with(getContext())
                     .load(photoUrl)
                     .into(imageView);
-            productTitle.setText(accommodation.getName()); // Adjust this part according to your AccommodationSummaryResponse class
-            productDescription.setText(accommodation.getDescription()); // Adjust this part according to your AccommodationSummaryResponse class
+            productTitle.setText(accommodation.getName());
+            productDescription.setText(accommodation.getDescription());
             accommodationPrice.setText("price per night: " + accommodation.getPrice().toString() + "$");
             accommodationRating.setText(accommodation.getRating().toString() + "★");
-//            productCard.setOnClickListener(v -> {
-//                // Handle click on the item at 'position'
-//                Log.i("ShopApp", "Clicked: " + accommodation.getName());
-//
-//                // Uncomment the next line to start a new activity
-//                Intent intent = new Intent(getContext(), AccommodationsActivity.class);
-//
-//                // If you want to pass data to the new activity, you can use intent.putExtra
-//                // For example, passing the product ID:
-//                // intent.putExtra("product_id", product.getId());
-//
-//                // Uncomment the next line to start the new activity
-//                getContext().startActivity(intent);
-//            });
+            addFavouriteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(addFavouriteListener != null){
+                        addFavouriteListener.onAddFavourite(UserInfo.getUsername(),accommodation.getAccommodationId());
+                    }
+                }
+            });
+            productTitle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(accommodationDetailsListener !=null){
+                        accommodationDetailsListener.onViewDetails(accommodation.getAccommodationId().toString());
+                    }
+                }
+            });
         }
 
         return convertView;
+    }
+    public interface AddFavouriteListener {
+        void onAddFavourite(String guestUsername, UUID accommodationId);
+    }
+    public interface AccommodationDetailsListener {
+        void onViewDetails(String accommodationId);
     }
 }

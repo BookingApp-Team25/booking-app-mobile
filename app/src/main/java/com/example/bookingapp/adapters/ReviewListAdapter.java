@@ -79,7 +79,7 @@ public class ReviewListAdapter extends ArrayAdapter<ReviewResponse> {
             });
 
             // Show or hide delete button based on user
-            if(UserInfo.getUsername().equals(review.getGuestUsername())){
+            if(UserInfo.getUsername().equals(review.getGuestUsername())|| UserInfo.getRole().equals("ROLE_Admin")){
                 deleteButton.setVisibility(View.VISIBLE);
             } else {
                 deleteButton.setVisibility(View.GONE);

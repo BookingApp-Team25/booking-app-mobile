@@ -1,6 +1,12 @@
 package com.example.bookingapp.activities;
 
+import static androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG;
+import static androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.biometric.BiometricManager;
+import androidx.biometric.BiometricPrompt;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -9,6 +15,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.provider.Settings;
 import android.util.Log;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,12 +33,17 @@ import com.example.bookingapp.dto.MessageResponse;
 import com.example.bookingapp.security.JwtTokenUtil;
 import com.example.bookingapp.security.UserInfo;
 
+import java.util.concurrent.Executor;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String CHANNEL_ID = "app_notification_channel";
+    private Executor executor;
+    private BiometricPrompt biometricPrompt;
+    private BiometricPrompt.PromptInfo promptInfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,8 +94,23 @@ public class LoginActivity extends AppCompatActivity {
                                          }
                                          else if(role.equals("ROLE_Admin")){
                                              Log.e("Role", "admin");
-                                             Intent intent = new Intent(LoginActivity.this, AdministratorMainActivity.class);
-                                             startActivity(intent);
+                                             promptInfo = new BiometricPrompt.PromptInfo.Builder()
+                                                     .setTitle("Admin fingerprint authentication")
+                                                     .setSubtitle("Log in using your fingerprint")
+                                                     .setNegativeButtonText("CANCEL")
+                                                     .build();
+                                             BiometricManager biometricManager = BiometricManager.from(LoginActivity.this);
+                                             int biometricStatus = biometricManager.canAuthenticate(BIOMETRIC_STRONG | DEVICE_CREDENTIAL);
+
+                                             if (biometricStatus == BiometricManager.BIOMETRIC_SUCCESS) {
+                                                 biometricPrompt.authenticate(promptInfo);
+                                             } else {
+                                                 // Handle cases where biometric authentication is not available
+                                                 Toast.makeText(getApplicationContext(),
+                                                         "Biometric authentication is not available", Toast.LENGTH_SHORT).show();
+                                             }
+
+
                                          }
                                          else{
                                              Log.e("Role", "guest");
@@ -112,6 +139,39 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        executor = ContextCompat.getMainExecutor(this);
+        biometricPrompt = new BiometricPrompt(LoginActivity.this,
+                executor, new BiometricPrompt.AuthenticationCallback() {
+            @Override
+            public void onAuthenticationError(int errorCode,
+                                              @NonNull CharSequence errString) {
+                super.onAuthenticationError(errorCode, errString);
+                Toast.makeText(getApplicationContext(),
+                                "Authentication error: " + errString, Toast.LENGTH_SHORT)
+                        .show();
+            }
+
+            @Override
+            public void onAuthenticationSucceeded(
+                    @NonNull BiometricPrompt.AuthenticationResult result) {
+                super.onAuthenticationSucceeded(result);
+                Toast.makeText(getApplicationContext(),
+                        "Authentication succeeded!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(LoginActivity.this, AdministratorMainActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onAuthenticationFailed() {
+                super.onAuthenticationFailed();
+                Toast.makeText(getApplicationContext(), "Authentication failed",
+                                Toast.LENGTH_SHORT)
+                        .show();
+            }
+        });
+
+
     }
 
     @Override

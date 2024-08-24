@@ -21,6 +21,7 @@ import com.example.bookingapp.dto.AccommodationSummaryResponse;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.UUID;
 
 ////public class AccommodationsListFragment extends ListFragment {
 ////    private AccommodationListAdapter adapter;
@@ -150,63 +151,73 @@ import java.util.Collection;
 //
 
 
-public class AccommodationsListFragment extends ListFragment {
-    private AccommodationListAdapter adapter;
-    private static final String ARG_PARAM = "param";
-    private FragmentAccommodationsListBinding binding;
-
-    public static AccommodationsListFragment newInstance(LiveData<Collection<AccommodationSummaryResponse>> accommodationsLiveData) {
-        AccommodationsListFragment fragment = new AccommodationsListFragment();
-
-        accommodationsLiveData.observeForever(new Observer<Collection<AccommodationSummaryResponse>>() {
-            @Override
-            public void onChanged(Collection<AccommodationSummaryResponse> accommodations) {
-                fragment.updateAccommodations(accommodations);
-            }
-        });
-
-        return fragment;
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentAccommodationsListBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-        return root;
-    }
-
-    public void updateAccommodations(Collection<AccommodationSummaryResponse> accommodations) {
-        // Ensure the fragment is attached and the context is non-null
-        if (getActivity() != null && isAdded()) {
-            if (adapter == null) {
-                adapter = new AccommodationListAdapter(getActivity(), new ArrayList<>(accommodations));
-                setListAdapter(adapter);
-            } else {
-                adapter.clear();
-                adapter.addAll(accommodations);
-                adapter.notifyDataSetChanged();
-            }
-        }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
-
-    @Override
-    public void onListItemClick(@NonNull ListView l, @NonNull View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
-        AccommodationSummaryResponse selectedAccommodation = adapter.getItem(position);
-        if (selectedAccommodation != null) {
-            Log.i("BookingApp", "Clicked: " + selectedAccommodation.getName());
-
-            Intent intent = new Intent(getContext(), AccommodationsActivity.class);
-            // Pass the entire AccommodationSummaryResponse object
-            intent.putExtra("accommodationId", selectedAccommodation.getAccommodationId());
-            getContext().startActivity(intent);
-        }
-    }
+public class AccommodationsListFragment extends ListFragment{
+//    private AccommodationListAdapter adapter;
+//    private static final String ARG_PARAM = "param";
+//    private FragmentAccommodationsListBinding binding;
+//
+//    public static AccommodationsListFragment newInstance(LiveData<Collection<AccommodationSummaryResponse>> accommodationsLiveData) {
+//        AccommodationsListFragment fragment = new AccommodationsListFragment();
+//
+//        accommodationsLiveData.observeForever(new Observer<Collection<AccommodationSummaryResponse>>() {
+//            @Override
+//            public void onChanged(Collection<AccommodationSummaryResponse> accommodations) {
+//                fragment.updateAccommodations(accommodations);
+//            }
+//        });
+//
+//        return fragment;
+//    }
+//
+//    @Nullable
+//    @Override
+//    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+//        binding = FragmentAccommodationsListBinding.inflate(inflater, container, false);
+//        View root = binding.getRoot();
+//        return root;
+//    }
+//
+//    public void updateAccommodations(Collection<AccommodationSummaryResponse> accommodations) {
+//        // Ensure the fragment is attached and the context is non-null
+//        if (getActivity() != null && isAdded()) {
+//            if (adapter == null) {
+//                adapter = new AccommodationListAdapter(getActivity(), new ArrayList<>(accommodations), AccommodationsListFragment.this,AccommodationListAdapter.this);
+//                setListAdapter(adapter);
+//            } else {
+//                adapter.clear();
+//                adapter.addAll(accommodations);
+//                adapter.notifyDataSetChanged();
+//            }
+//        }
+//    }
+//
+//    @Override
+//    public void onDestroyView() {
+//        super.onDestroyView();
+//        binding = null;
+//    }
+//
+//    @Override
+//    public void onListItemClick(@NonNull ListView l, @NonNull View v, int position, long id) {
+//        super.onListItemClick(l, v, position, id);
+//        AccommodationSummaryResponse selectedAccommodation = adapter.getItem(position);
+//        if (selectedAccommodation != null) {
+//            Log.i("BookingApp", "Clicked: " + selectedAccommodation.getName());
+//
+//            Intent intent = new Intent(getContext(), AccommodationsActivity.class);
+//            // Pass the entire AccommodationSummaryResponse object
+//            intent.putExtra("accommodationId", selectedAccommodation.getAccommodationId());
+//            getContext().startActivity(intent);
+//        }
+//    }
+//
+//    @Override
+//    public void onAddFavourite(String guestUsername, UUID accommodationId) {
+//
+//    }
+//
+//    @Override
+//    public void onViewDetails(String accommodationId) {
+//
+//    }
 }

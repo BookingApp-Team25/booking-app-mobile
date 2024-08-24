@@ -4,6 +4,7 @@ import com.example.bookingapp.dto.MessageResponse;
 import com.example.bookingapp.dto.ReviewRequest;
 import com.example.bookingapp.dto.ReviewResponse;
 
+import java.util.Collection;
 import java.util.List;
 
 import retrofit2.Call;
@@ -29,5 +30,6 @@ public interface ReviewService {
     @POST("review")
     Call<MessageResponse> createReview(@Body ReviewRequest reviewRequest, @Header("Authorization") String authorizationHeader);
 
-
+    @GET("review/reported-reviews")
+    Call<Collection<ReviewResponse>> getAllReportedReviews(@Header("Authorization") String authorizationHeader);
 }

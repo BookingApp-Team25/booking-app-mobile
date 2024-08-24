@@ -158,6 +158,11 @@ public class HostMainActivity extends AppCompatActivity implements NavigationVie
             loadSummaries();
             return true;
         }
+        else if(itemId == R.id.viewStatistics){
+            Intent intent = new Intent(HostMainActivity.this, HostLogsActivity.class);
+            startActivity(intent);
+            return true;
+        }
         else if(itemId == R.id.viewNotifications){
             Intent intent = new Intent(HostMainActivity.this, NotificationsActivity.class);
             startActivity(intent);

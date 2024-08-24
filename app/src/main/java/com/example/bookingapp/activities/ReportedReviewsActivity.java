@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -17,18 +19,34 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.bookingapp.R;
+import com.example.bookingapp.adapters.ReportListAdapter;
+import com.example.bookingapp.adapters.ReviewListAdapter;
+import com.example.bookingapp.clients.ClientUtils;
 import com.example.bookingapp.databinding.ActivityAdministratorMainNavBarBinding;
 import com.example.bookingapp.databinding.ActivityReportedReviewsBinding;
 import com.example.bookingapp.databinding.ActivityReportedReviewsNavbarBinding;
+import com.example.bookingapp.dto.ReviewResponse;
+import com.example.bookingapp.dto.enums.ReviewType;
+import com.example.bookingapp.security.UserInfo;
 import com.google.android.material.navigation.NavigationView;
 
-public class ReportedReviewsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import java.util.ArrayList;
+import java.util.Collection;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class ReportedReviewsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ReviewListAdapter.ReviewReportListener, ReviewListAdapter.ReviewDeleteListener {
 
     ActivityReportedReviewsNavbarBinding binding;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private DrawerLayout drawer;
     private androidx.appcompat.widget.Toolbar toolbar;
     private NavigationView navigationView;
+    private ListView reportedReviewsViewList;
+    private ReviewListAdapter adapter;
+    private ArrayList<ReviewResponse> reportedReviews;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +67,30 @@ public class ReportedReviewsActivity extends AppCompatActivity implements Naviga
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
+
+        reportedReviewsViewList = binding.activityReportedReviews.activityReportedReviewsContent.reportedReviewsListView;
+        reportedReviews = new ArrayList<>();
+        adapter = new ReviewListAdapter(ReportedReviewsActivity.this,reportedReviews,ReportedReviewsActivity.this,ReportedReviewsActivity.this,"");
+        reportedReviewsViewList.setAdapter(adapter);
+        Call<Collection<ReviewResponse>> call = ClientUtils.reviewService.getAllReportedReviews(UserInfo.getToken());
+        call.enqueue(new Callback<Collection<ReviewResponse>>() {
+            @Override
+            public void onResponse(Call<Collection<ReviewResponse>> call, Response<Collection<ReviewResponse>> response) {
+                if(response.code() == 200){
+                    reportedReviews.clear();
+                    reportedReviews.addAll(response.body());
+                    adapter.notifyDataSetChanged();
+                }
+                else{
+                    Toast.makeText(ReportedReviewsActivity.this, "REPORTED REVIEWS SERVER ERROR", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Collection<ReviewResponse>> call, Throwable t) {
+                Toast.makeText(ReportedReviewsActivity.this, "REPORTED REVIES ERROR", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -87,5 +129,39 @@ public class ReportedReviewsActivity extends AppCompatActivity implements Naviga
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onDeleteReview(ReviewResponse review) {
+        boolean flag = false;
+        if(review.getType() == ReviewType.AccommodationReview){
+            flag = true;
+        }
+        Call<Boolean> call = ClientUtils.reviewService.deleteReview(review.getId().toString(),flag,UserInfo.getToken());
+        call.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if(response.code() == 200){
+                    Toast.makeText(ReportedReviewsActivity.this, "Successfully deleted review", Toast.LENGTH_SHORT).show();
+//                    Intent intent = getIntent();
+//                    finish();
+//                    startActivity(intent);
+                    reportedReviews.removeIf(reportedReview -> reportedReview.getId().equals(review.getId()));
+                    adapter.notifyDataSetChanged();
+                }
+                else{
+                    Toast.makeText(ReportedReviewsActivity.this, "DELETE REVIEW SERVER ERROR", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Toast.makeText(ReportedReviewsActivity.this, "DELETE REIVEW ERROR", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void onReportReview(ReviewResponse review) {
     }
 }

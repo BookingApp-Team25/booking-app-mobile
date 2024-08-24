@@ -78,6 +78,11 @@ public class AdministratorMainActivity extends AppCompatActivity implements Navi
         else if(itemId == R.id.iconHome){
             return true;
         }
+        else if(itemId == R.id.itemViewReportedUsers){
+            Intent intent = new Intent(AdministratorMainActivity.this, AdministratorReportedUsersActivity.class);
+            startActivity(intent);
+            return true;
+        }
         else{
             return super.onOptionsItemSelected(item);
         }

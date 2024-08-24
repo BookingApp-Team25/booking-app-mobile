@@ -20,12 +20,15 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class HostReservationListAdapter extends ArrayAdapter<HostReservationResponse> {
+public class HostReservationListAdapter extends ArrayAdapter<HostReservationResponse>{
     List<HostReservationResponse> hostReservationResponses;
+    ReportUserListener reportUserListener;
 
-    public HostReservationListAdapter(Context context, List<HostReservationResponse> hostReservationResponses){
+
+    public HostReservationListAdapter(Context context, List<HostReservationResponse> hostReservationResponses,ReportUserListener reportUserListener){
         super(context, R.layout.host_reservation_card, hostReservationResponses);
         this.hostReservationResponses = hostReservationResponses;
+        this.reportUserListener = reportUserListener;
     }
 
     @NonNull
@@ -37,12 +40,13 @@ public class HostReservationListAdapter extends ArrayAdapter<HostReservationResp
         }
 
 
-        ConstraintLayout hostResrevationCard = convertView.findViewById(R.id.hostReservationCard);
+        ConstraintLayout hostResrevationCard = convertView.findViewById(R.id.guestReservationCard);
         ImageView imageView = convertView.findViewById(R.id.hostReservationImageView);
         TextView accommodationName = convertView.findViewById(R.id.hostReservationApartmentNameTextView);
         TextView guestName = convertView.findViewById(R.id.hostReservationGuestNameTextView);
         TextView datePeriod = convertView.findViewById(R.id.hostReservationDatePeriodTextView);
         TextView reservationStatus = convertView.findViewById(R.id.hostReservationStatusTextView);
+        FloatingActionButton reportButton = convertView.findViewById(R.id.hostReservationReportUserButton);
         if (hostReservationResponse != null) {
             String photoUrl = hostReservationResponse.getAccommodationPhoto(); // Replace this with your actual URL string
             // Load the image using Glide
@@ -56,8 +60,20 @@ public class HostReservationListAdapter extends ArrayAdapter<HostReservationResp
             String startDateString = hostReservationResponse.getReservedDate().getStartDate().format(formatter);
             String endDateString = hostReservationResponse.getReservedDate().getEndDate().format(formatter);
             datePeriod.setText(startDateString + " : " + endDateString);
+            reportButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(reportUserListener != null){
+                        reportUserListener.onReportUser(hostReservationResponse.getGuestName(), view);
+                    }
+                }
+            });
+
         }
 
         return convertView;
+    }
+    public interface ReportUserListener {
+        void onReportUser(String username, View v);
     }
 }
